@@ -1,26 +1,6 @@
 from pathlib import Path
 
-files = [
-    ".github/workflow/ci.yaml",
-    ".github/workflow/publish_python_package.yaml",
-    "src/__init__.py",
-    "src/demo.py",
-    "src/croc.py",
-    "tests/__init__.py",
-    "tox.ini",
-    ".pre-commit-config.yaml",
-    "setup.py",
-    "setup.cfg",
-    "pyproject.toml",
-    "requirements.txt",
-    "README.md",
-    "LICENSE",
-    ".gitignore",
-    "data",
-    "src/piplines",
-    "models",
-
-]
+files = []
 
 
 def check_path(path):
