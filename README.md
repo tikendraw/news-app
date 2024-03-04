@@ -17,4 +17,7 @@ source .venv/bin/activate
 
 # install dependencies
 pip install -r requirements_dev.txt
+
+#install pre-commit
+pre-commit install
 ```
