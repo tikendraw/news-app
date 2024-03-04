@@ -68,13 +68,26 @@ COUNTRIES = [
 # class TestNews(NewsAPI):
 
 
+class GNewsAPIError(Exception):
+    pass
+
+
 class GNewsAPI(NewsAPI):
+
+    ERROR_MESSAGES = {
+        400: "Bad Request -- Your request is invalid.",
+        401: "Unauthorized -- Your API key is wrong.",
+        403: "Forbidden -- You have reached your daily quota, the next reset is at 00:00 UTC.",
+        429: "Too Many Requests -- You have made more requests per second than you are allowed.",
+        500: "Internal Server Error -- We had a problem with our server. Try again later.",
+        503: "Service Unavailable -- We're temporarily offline for maintenance. Please try again later.",
+    }
 
     def __init__(
         self,
         apikey: str,
         category: str = "general",
-        n_news: int = 10,
+        n_news: int = 100,
         lang: str = "en",
         country: str = "us",
     ):
@@ -97,16 +110,25 @@ class GNewsAPI(NewsAPI):
         self.base_url = f"https://gnews.io/api/v4/top-headlines?category={self.category}&lang={self.lang}&country={self.country}&max={self.n_news}&apikey={self.apikey}"
 
     def parse_news(self, data: dict) -> Optional[list[NewsArticle]]:
-        if articles := data.get("articles", []):
+        articles = data.get("articles", [])
+        if len(articles) > 0:
             return [NewsArticle(**article_data) for article_data in articles]
         else:
             return None
 
     def get_news(self) -> Optional[list[NewsArticle]]:
-        with urllib.request.urlopen(self.base_url) as response:
-            data = json.loads(response.read().decode("utf-8"))
-            ic(type(data))
-            return self.parse_news(data)
+        try:
+            with urllib.request.urlopen(self.base_url) as response:
+                if response.status in self.ERROR_MESSAGES:
+                    raise GNewsAPIError(self.ERROR_MESSAGES[response.status])
+                data = json.loads(response.read().decode("utf-8"))
+                return self.parse_news(data)
+        except urllib.error.URLError as e:
+            raise GNewsAPIError(f"Failed to connect to the server: {e.reason}") from e
+        except json.JSONDecodeError as e:
+            raise GNewsAPIError(
+                "Failed to parse response data. JSON decoding error."
+            ) from e
 
 
 # class TestNews(BaseModel):
