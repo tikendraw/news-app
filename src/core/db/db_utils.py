@@ -1,4 +1,4 @@
-from typing import List
+from typing import Iterable, List
 
 # Function to parse JSON articles and insert into database if valid
 from sqlalchemy.exc import IntegrityError
@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 
 from ..news_model import NewsArticle
 from . import Session
-from .models import NewsArticleORM
 from .news_table import NewsArticleORM
 
 
@@ -18,6 +17,12 @@ class AddArticleError(Exception):
 
 class UpdateArticleError(Exception):
     """Raised when updating an article in the database fails."""
+
+    pass
+
+
+class DatabaseError(Exception):
+    """Raised for database-related errors."""
 
     pass
 
@@ -78,7 +83,8 @@ def add_articles_to_db(articles: Iterable[NewsArticle], session: Session) -> Non
     """
     Add a list of articles to the database.
     """
-
+    add_count = 0
+    update_count = 0
     for article in articles:
         if not isinstance(article, NewsArticle):
             raise TypeError("Articles must be a list of NewsArticle objects.")
@@ -89,25 +95,20 @@ def add_articles_to_db(articles: Iterable[NewsArticle], session: Session) -> Non
                 .first()
             ):
                 add_article_to_db(article, session)
+                add_count += 1
             else:
                 update_article_in_db(article, session)
+                update_count += 1
         except (AddArticleError, UpdateArticleError) as e:
             print(f"Error occurred while processing article: {str(e)}")
 
-
-from typing import List
-
-from sqlalchemy.orm import Session
-
-from .models import NewsArticleORM
+    if add_count:
+        print(f"Added {add_count} articles to database.")
+    if update_count:
+        print(f"Updated {update_count} articles in database.")
 
 
-class DatabaseError(Exception):
-    """Raised for database-related errors."""
-
-    pass
-
-
+# Function to retrieve articles from database
 def get_articles_from_db(session: Session) -> List[NewsArticleORM]:
     """Retrieve all articles from the database."""
     try:
