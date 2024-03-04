@@ -1,27 +1,49 @@
+# https://docs.python.org/3/library/json.html
+# This library will be used to parse the JSON data returned by the API.
+import json
 import os
 import sys
+
+# https://docs.python.org/3/library/urllib.request.html#module-urllib.request
+# This library will be used to fetch the API.
+import urllib.request
 from datetime import datetime
 
-from ..core.db import Session
-from ..core.db.db_utils import *
+import requests
+
+from core.db import Session
+from core.db.db_utils import *
 
 # Example usage
-json_data = {
-    "total Articles": 54904,
-    "articles": [
-        {
-            "title": "samsung 8 and 7 Pro’s design gets revealed even more with fresh crisp renders",
-            "description": "Now we have a complete image of what the next Google flagship phones will look like. All that's left now is to welcome them during their October announcement!",
-            "content": "Google’s highly anticipated upcoming Pixel 7 series is just around the corner, scheduled to be announced on October 6, 2022, at 10 am EDT during the Made by Google event. Well, not that there is any lack of images showing the two new Google phones, b... [1419 chars]",
-            "url": "https://www.phonearena.com/news/google-pixel-7-and-pro-design-revealed-even-more-fresh-renders_id142800",
-            "image": "https://m-cdn.phonearena.com/images/article/142800-wide-two_1200/Googles-Pixel-7-and-7-Pros-design-gets-revealed-even-more-with-fresh-crisp-renders.jpg",
-            # "publishedAt": "2022-09-28T08:14:24Z",
-            "source": {
-                "name": "PhoneArena",
-                "url": "https://www.phonearena.com"
-            }
-        }
-    ]
-}
+from core.news_api import TestNews
 
-add_articles_to_db(json_data)
+# requests_cache.install_cache('demo_cache')
+# requests.get('https://httpbin.org/delay/1')
+
+
+# url = f"https://gnews.io/api/v4/top-headlines?category={category}&lang=en&country=us&max=10&apikey={apikey}"
+
+
+# output = None
+
+#     for i in range(len(articles)):
+#         # articles[i].title
+#         print(f"Title: {articles[i]['title']}")
+#         # articles[i].description
+#         print(f"Description: {articles[i]['description']}")
+#         # You can replace {property} below with any of the article properties returned by the API.
+#         # articles[i].{property}
+#         # print(f"{articles[i]['{property}']}")
+
+#         # Delete this line to display all the articles returned by the request. Currently only the first article is displayed.
+#         break
+
+apikey = "70aa5daa071d66bf09522bece9ee15a5"
+test = TestNews(category="general", n_news=10, lang="en", country="us", apikey=apikey)
+
+news = test.get_news()
+
+for i in range(len(news)):
+    print()
+    print(f"Title: {news[i].title}")
+    print(f"Description: {news[i].description}")
