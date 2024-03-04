@@ -13,5 +13,5 @@ test = GNewsAPI(category="general", n_news=100, lang="en", country="us", apikey=
 
 news = test.get_news()
 
-print(news)
+# print(news)
 add_articles_to_db(session=Session(), articles=news)
