@@ -3,3 +3,4 @@ sqlalchemy
 flask
 requests-cache
 pre-commit
+python-dotenv
