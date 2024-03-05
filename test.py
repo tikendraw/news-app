@@ -1,13 +1,12 @@
-import urllib.parse
+from pydantic import BaseModel
 
-params = {
-    "category": "health",
-    "lang": None,
-    "country": "ind",
-    "max": "33",
-    "apikey": "lkasdf",
-}
-encoded_params = urllib.parse.urlencode(params)
-a = f"https://gnews.io/api/v4/top-headlines?{encoded_params}"
 
-print(a)
+class Item(BaseModel):
+    name: str
+    price: float
+    tax: float = None
+
+
+h = dict(name="Foo", price=50.2, tax=20.2, hi="The Foo Wrestlers", ri="hi")
+item = Item(**h)
+print(item)
