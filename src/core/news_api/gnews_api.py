@@ -99,7 +99,7 @@ class GNewsAPI(NewsAPI):
         self.country = country
 
         if not self.apikey:
-            raise ValueError("API key is required")
+            raise ValueError("API key is required. Get if from https://gnews.io/")
 
         if self.lang not in LANGUAGES:
             raise ValueError(f"language must me one of {LANGUAGES}")
