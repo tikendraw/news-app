@@ -8,7 +8,6 @@ from ..news_model import NewsArticle
 
 
 class NewsAPI:
-
     def __init__(self):
         self.base_url = None
 
