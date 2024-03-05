@@ -73,7 +73,6 @@ class GNewsAPIError(Exception):
 
 
 class GNewsAPI(NewsAPI):
-
     ERROR_MESSAGES = {
         400: "Bad Request -- Your request is invalid.",
         401: "Unauthorized -- Your API key is wrong.",
@@ -91,7 +90,6 @@ class GNewsAPI(NewsAPI):
         lang: str = "en",
         country: str = "us",
     ):
-
         self.apikey = apikey
         self.category = category
         self.n_news = n_news
@@ -99,7 +97,12 @@ class GNewsAPI(NewsAPI):
         self.country = country
 
         if not self.apikey:
-            raise ValueError("API key is required. Get if from https://gnews.io/")
+            try:
+                apikey = os.environ.get("GNEWS_API_KEY")
+            except KeyError as e:
+                raise ValueError(
+                    "API key is required. Get if from https://gnews.io/ . pass as argument or set GNEWS_API_KEY environment variable"
+                ) from e
 
         if self.lang not in LANGUAGES:
             raise ValueError(f"language must me one of {LANGUAGES}")
