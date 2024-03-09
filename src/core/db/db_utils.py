@@ -39,8 +39,8 @@ def add_article_to_db(article: NewsArticle, session: Session) -> None:
             url=str(article.url),
             image=str(article.image),
             published_at=article.published_at,
-            source_name=article.source.name,
-            source_url=str(article.source.url),
+            source_name=article.source_name,
+            source_url=str(article.source_url),
         )
         session.add(article_orm)
         session.commit()
