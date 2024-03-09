@@ -1,0 +1,657 @@
+ic| querystring: {'language': 'EN'}
+ic| response.status_code: 200
+ic| response: <Response [200]>
+ic| response.json(): {'news': {'news': [{'_score': 1.1216676,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:18:08.050Z',
+                                         'date': '2024-03-06T12:08:30.000Z',
+                                         'description': 'The Enforcement Directorate (ED) has filed '
+                                                        'a charge sheet under anti-money laundering '
+                                                        'laws against 299 entities, including '
+                                                        'Chinese individuals, in a cryptocurrency '
+                                                        'scam probe',
+                                         'hostname': 'crypto.news',
+                                         'id': '0435b908d4dd216e1b684eb8608f66bc',
+                                         'language': 'EN',
+                                         'link': 'https://crypto.news/indias-ed-leads-crackdown-on-cryptocurrency-scam-with-charge-sheet-against-299-entities/',
+                                         'props': {'description': 'The Enforcement Directorate (ED) '
+                                                                  'has filed a charge sheet under '
+                                                                  'anti-money laundering laws '
+                                                                  'against 299 entities, including '
+                                                                  'Chinese individuals, in a '
+                                                                  'cryptocurrency scam probe',
+                                                   'image': 'https://crypto.news/app/uploads/2024/01/crypto-news-India-indian-flag-option05.webp',
+                                                   'image:alt': 'India',
+                                                   'image:height': '824',
+                                                   'image:secure_url': 'https://crypto.news/app/uploads/2024/01/crypto-news-India-indian-flag-option05.webp',
+                                                   'image:type': 'image/webp',
+                                                   'image:width': '1380',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'crypto.news',
+                                                   'title': 'India’s ED leads crackdown on '
+                                                            'cryptocurrency scam with charge sheet '
+                                                            'against 299 entities',
+                                                   'type': 'article',
+                                                   'url': 'https://crypto.news/indias-ed-leads-crackdown-on-cryptocurrency-scam-with-charge-sheet-against-299-entities/'},
+                                         'source': 'crypto.news',
+                                         'title': 'India’s ED leads crackdown on cryptocurrency '
+                                                  'scam with charge sheet against 299 entities'},
+                                        {'_score': 1.1217749,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:18:16.554Z',
+                                         'date': '2024-03-06T12:08:20.000Z',
+                                         'description': "The Big 12 women's basketball tournament "
+                                                        'will unfold from March 7-12 in Kansas '
+                                                        'City, Missouri. Here are predictions for '
+                                                        'the entire tournament.',
+                                         'hostname': 'statesman.com',
+                                         'id': '9a8be0950b5d97c6bcc652962c36529c',
+                                         'language': 'EN',
+                                         'link': 'https://www.statesman.com/story/sports/college/big-12/2024/03/06/big-12-womens-basketball-tournament-predictions-ou-title-since-2007/72854574007/',
+                                         'props': {'description': "The Big 12 women's basketball "
+                                                                  'tournament will unfold from '
+                                                                  'March 7-12 in Kansas City, '
+                                                                  'Missouri. Here are predictions '
+                                                                  'for the entire tournament.',
+                                                   'image': 'https://www.statesman.com/gcdn/authoring/authoring-images/2024/02/29/NOKL/72781748007-img-6254.jpg?crop=3975,2237,x0,y207&width=3200&height=1801&format=pjpg&auto=webp',
+                                                   'image:height': '1801',
+                                                   'image:width': '3200',
+                                                   'site_name': 'Austin American-Statesman',
+                                                   'title': "Big 12 women's basketball tournament "
+                                                            'predictions: Can OU win its first '
+                                                            'title since 2007?',
+                                                   'type': 'article',
+                                                   'url': 'https://www.statesman.com/story/sports/college/big-12/2024/03/06/big-12-womens-basketball-tournament-predictions-ou-title-since-2007/72854574007/'},
+                                         'source': 'Austin American-Statesman',
+                                         'title': 'Big 12 tournament predictions: Can OU win its '
+                                                  'first title since 2007?'},
+                                        {'_score': 1.119704,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:16:49.308Z',
+                                         'date': '2024-03-06T12:06:17.000Z',
+                                         'description': 'Calling either a feminist triumph is like '
+                                                        'saying “WAP” solved misogyny in hip-hop or '
+                                                        '“Lean In” defeated systemic sexism',
+                                         'hostname': 'electricliterature.com',
+                                         'id': '95cc65abaef3a646b7a428b3eb9a8938',
+                                         'language': 'EN',
+                                         'link': 'https://electricliterature.com/i-loved-barbie-and-poor-things-but-neither-is-a-feminist-masterpiece/',
+                                         'props': {'description': 'Calling either a feminist '
+                                                                  'triumph is like saying “WAP” '
+                                                                  'solved misogyny in hip-hop or '
+                                                                  '“Lean In” defeated systemic '
+                                                                  'sexism',
+                                                   'image': 'https://149349728.v2.pressablecdn.com/wp-content/uploads/2024/03/Screen-Shot-2024-03-05-at-3.54.46-PM.png',
+                                                   'image:height': '826',
+                                                   'image:type': 'image/png',
+                                                   'image:width': '1460',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'Electric Literature',
+                                                   'title': 'I Loved “Barbie” and “Poor Things” but '
+                                                            'Neither Film Is a Feminist Masterpiece '
+                                                            '- Electric Literature',
+                                                   'type': 'article',
+                                                   'url': 'https://electricliterature.com/i-loved-barbie-and-poor-things-but-neither-is-a-feminist-masterpiece/'},
+                                         'source': 'Electric Literature',
+                                         'title': 'I Loved “Barbie” and “Poor Things” but Neither '
+                                                  'Film Is a Feminist Masterpiece - Electric '
+                                                  'Literature'},
+                                        {'_score': 1.1162722,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:13:34.064Z',
+                                         'date': '2024-03-06T12:06:00.000Z',
+                                         'description': 'Fairfield Social Club will open '
+                                                        'permanently on Saturday - with free '
+                                                        'currywurst and beer for first 100 people',
+                                         'hostname': 'manchestereveningnews.co.uk',
+                                         'id': '274855c5cfe65a940abfd5d9f4065cfc',
+                                         'language': 'EN',
+                                         'link': 'https://www.manchestereveningnews.co.uk/whats-on/food-drink-news/vibrant-food-drink-hub-overlooking-28764286',
+                                         'props': {'description': 'Fairfield Social Club will open '
+                                                                  'permanently on Saturday - with '
+                                                                  'free currywurst and beer for '
+                                                                  'first 100 people',
+                                                   'image': 'https://i2-prod.manchestereveningnews.co.uk/incoming/article28764618.ece/ALTERNATES/s1200/0_AMR_MEN_060324_FS3.jpg',
+                                                   'language': 'en',
+                                                   'locale': 'en_GB',
+                                                   'section': 'Food & Drink',
+                                                   'site_name': 'Manchester Evening News',
+                                                   'title': 'Vibrant food and drink hub overlooking '
+                                                            'Manchester park to open this weekend',
+                                                   'type': 'article',
+                                                   'url': 'https://www.manchestereveningnews.co.uk/whats-on/food-drink-news/vibrant-food-drink-hub-overlooking-28764286'},
+                                         'source': 'Manchester Evening News',
+                                         'title': 'Vibrant food and drink hub overlooking '
+                                                  'Manchester park to open this weekend with '
+                                                  'special line-ups announced - Manchester Evening '
+                                                  'News'},
+                                        {'_score': 1.1168035,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:15:06.984Z',
+                                         'date': '2024-03-06T12:05:46.000Z',
+                                         'description': 'A majority of Iowans support legislation '
+                                                        'to require parental permission for '
+                                                        'children under 18 to have social media '
+                                                        'accounts, a new Iowa Poll finds.',
+                                         'hostname': 'desmoinesregister.com',
+                                         'id': '974f8c86ae8bd4843d611d962c6dfcab',
+                                         'language': 'EN',
+                                         'link': 'https://www.desmoinesregister.com/story/news/politics/iowa-poll/2024/03/06/iowa-poll-social-media-accounts-for-kids-should-need-ok-from-parents-tiktok-instagram/72776525007/',
+                                         'props': {'image': 'https://www.gannett-cdn.com/presto/2022/03/07/USAT/dd342a36-af39-4ec7-a949-535e1a886cf1-AP_Russia_Ukraine_War_Tech_Companies.jpg?auto=webp&crop=4575,2573,x0,y232&format=pjpg&width=1200',
+                                                   'image:height': '675',
+                                                   'image:width': '1200',
+                                                   'site_name': 'Des Moines Register',
+                                                   'title': 'Iowa Poll: Most favor requiring '
+                                                            'parental approval for kids to have '
+                                                            'social media accounts'},
+                                         'source': 'Des Moines Register',
+                                         'title': 'Iowa Poll: Social media accounts for kids should '
+                                                  'need OK from parents'},
+                                        {'_score': 1.1187161,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:17:29.463Z',
+                                         'date': '2024-03-06T12:04:02.000Z',
+                                         'description': None,
+                                         'hostname': 'msn.com',
+                                         'id': '801f6c8d890eec533147f518120ebeb9',
+                                         'language': 'EN',
+                                         'link': 'https://www.msn.com/en-za/news/world/why-are-people-blaming-the-houthis-for-cutting-the-red-sea-cables/ar-BB1jq4lL',
+                                         'props': {},
+                                         'source': 'MSN',
+                                         'title': 'MSN'},
+                                        {'_score': 1.1286507,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:13:27.113Z',
+                                         'date': '2024-03-06T12:03:44.000Z',
+                                         'description': 'JACKSONVILLE BEACH, Fla., March 6, 2024 '
+                                                        '(SEND2PRESS NEWSWIRE) -- Industrial '
+                                                        'SalesLeads announced today the February '
+                                                        '2024 results for the new planned capital '
+                                                        'project spending report for the Industrial '
+                                                        'Manufacturing industry. The Firm tracks '
+                                                        'North American planned industrial capital '
+                                                        'project activity; including facility '
+                                                        'expansions, new plant construction and '
+                                                        'significant equipment modernization '
+                                                        'projects. Research confirms 150 new '
+                                                        'projects in the Industrial Manufacturing '
+                                                        'sector as compared to 150 in January 2024. '
+                                                        '- News from Industrial SalesLeads Inc, '
+                                                        'issued by Send2Press Newswire',
+                                         'hostname': 'send2press.com',
+                                         'id': '8104ad9a6971bf9d4dd9361ceb03e062',
+                                         'language': 'EN',
+                                         'link': 'https://www.send2press.com/wire/february-2024-jumps-to-a-strong-150-new-industrial-manufacturing-planned-projects/',
+                                         'props': {'description': 'JACKSONVILLE BEACH, Fla., March '
+                                                                  '6, 2024 (SEND2PRESS NEWSWIRE) -- '
+                                                                  'Industrial SalesLeads announced '
+                                                                  'today the February 2024 results '
+                                                                  'for the new planned capital '
+                                                                  'project spending report for the '
+                                                                  'Industrial Manufacturing '
+                                                                  'industry. The Firm tracks North '
+                                                                  'American planned industrial '
+                                                                  'capital project activity; '
+                                                                  'including facility expansions, '
+                                                                  'new plant construction and '
+                                                                  'significant equipment '
+                                                                  'modernization projects. Research '
+                                                                  'confirms 150 new projects in the '
+                                                                  'Industrial Manufacturing sector '
+                                                                  'as compared to 150 in January '
+                                                                  '2024. - News from Industrial '
+                                                                  'SalesLeads Inc, issued by '
+                                                                  'Send2Press Newswire',
+                                                   'image': 'https://www.send2press.com/wire/images/24-0306-s2p-indsalesleads-800x600.jpg',
+                                                   'image:height': '600',
+                                                   'image:type': 'image/jpeg',
+                                                   'image:width': '800',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'Send2Press Newswire',
+                                                   'title': 'February 2024 Jumps to a Strong 150 '
+                                                            'New Industrial Manufacturing Planned '
+                                                            'Projects - Send2Press Newswire',
+                                                   'type': 'article',
+                                                   'url': 'https://www.send2press.com/wire/february-2024-jumps-to-a-strong-150-new-industrial-manufacturing-planned-projects/'},
+                                         'source': 'Send2Press Newswire',
+                                         'title': 'February 2024 Jumps to a Strong 150 New '
+                                                  'Industrial Manufacturing Planned Projects - '
+                                                  'Send2Press Newswire'},
+                                        {'_score': 1.1297632,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:18:16.642Z',
+                                         'date': '2024-03-06T12:02:09.000Z',
+                                         'description': 'Here are your TV, streaming and listening '
+                                                        "options for Iowa State Cyclones men's "
+                                                        'basketball vs. BYU today.',
+                                         'hostname': 'desmoinesregister.com',
+                                         'id': '6f27ef040e9d64f0e380556a9af1b3b1',
+                                         'language': 'EN',
+                                         'link': 'https://www.desmoinesregister.com/story/sports/college/iowa-state/cyclone-insider/2024/03/06/iowa-state-basketball-vs-byu-how-to-watch-stream-start-time-cyclones/72832878007/',
+                                         'props': {'image': 'https://www.gannett-cdn.com/authoring/authoring-images/2024/03/02/PDEM/72822770007-ap-24062791713623.jpg?auto=webp&crop=7729,4348,x0,y402&format=pjpg&width=1200',
+                                                   'image:height': '675',
+                                                   'image:width': '1200',
+                                                   'site_name': 'Des Moines Register',
+                                                   'title': 'How to watch, stream Iowa State '
+                                                            'basketball vs. BYU today'},
+                                         'source': 'Des Moines Register',
+                                         'title': 'Iowa State basketball vs. BYU: How to watch, '
+                                                  'stream, start time'},
+                                        {'_score': 1.1190389,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:18:57.747Z',
+                                         'date': '2024-03-06T12:01:30.000Z',
+                                         'description': "Ireland's Catholic bishops called on "
+                                                        'Israel and Hamas to immediately end '
+                                                        'hostilities in the Holy Land as the war '
+                                                        'triggered by the Oct. 7 attacks enters its '
+                                                        'sixth month, and U.N. agencies warn that '
+                                                        'children are dying of starvation in Gaza.',
+                                         'hostname': 'catholicreview.org',
+                                         'id': '043bd29a2bd0c89e9fe576725a0b4a00',
+                                         'language': 'EN',
+                                         'link': 'https://catholicreview.org/irish-bishops-urge-immediate-end-to-israel-hamas-hostilities-as-children-in-gaza-face-starvation/',
+                                         'props': {'description': "Ireland's Catholic bishops "
+                                                                  'called on Israel and Hamas to '
+                                                                  'immediately end hostilities in '
+                                                                  'the Holy Land as the war '
+                                                                  'triggered by the Oct. 7 attacks '
+                                                                  'enters its sixth month, and U.N. '
+                                                                  'agencies warn that children are '
+                                                                  'dying of starvation in Gaza.',
+                                                   'image': 'https://catholicreview.org/wp-content/uploads/2024/03/gaza-hunger-kids.jpg',
+                                                   'image:height': '600',
+                                                   'image:width': '900',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'Catholic Review',
+                                                   'title': 'Irish bishops urge immediate end to '
+                                                            'Israel-Hamas hostilities as children '
+                                                            'in Gaza face starvation - Catholic '
+                                                            'Review',
+                                                   'type': 'article',
+                                                   'url': 'https://catholicreview.org/irish-bishops-urge-immediate-end-to-israel-hamas-hostilities-as-children-in-gaza-face-starvation/'},
+                                         'source': 'Catholic Review of Baltimore',
+                                         'title': 'Irish bishops urge immediate end to Israel-Hamas '
+                                                  'hostilities as children in Gaza face starvation '
+                                                  '- Catholic Review'},
+                                        {'_score': 1.1190389,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:17:40.386Z',
+                                         'date': '2024-03-06T12:00:59.000Z',
+                                         'description': 'The Morning Joe panel reacts to the '
+                                                        'outcome of Super Tuesday, which found '
+                                                        'Donald Trump picking up 1,057 delegates, '
+                                                        "and the panel discusses Trump's constant "
+                                                        'trashing of the country.',
+                                         'hostname': 'msnbc.com',
+                                         'id': '4ad4ad21ea07390b5a293fbe7917fb06',
+                                         'language': 'EN',
+                                         'link': 'https://www.msnbc.com/morning-joe/watch/joe-trump-s-message-of-america-sucks-is-his-most-offensive-lie-205556293982',
+                                         'props': {'description': 'The Morning Joe panel reacts to '
+                                                                  'the outcome of Super Tuesday, '
+                                                                  'which found Donald Trump picking '
+                                                                  'up 1,057 delegates, and the '
+                                                                  "panel discusses Trump's constant "
+                                                                  'trashing of the country.',
+                                                   'image': 'https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/mpx/2704722219/2024_03/1709725423741_n_mj_joe_240306_1920x1080-dryfgf.jpg',
+                                                   'image:height': '630',
+                                                   'image:secure_url': 'https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/mpx/2704722219/2024_03/1709725423741_n_mj_joe_240306_1920x1080-dryfgf.jpg',
+                                                   'image:width': '1200',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'MSNBC.com',
+                                                   'title': "Joe: Trump's message of 'America "
+                                                            "sucks' is his most offensive lie",
+                                                   'type': 'article',
+                                                   'url': 'https://www.msnbc.com/morning-joe/watch/joe-trump-s-message-of-america-sucks-is-his-most-offensive-lie-205556293982'},
+                                         'source': 'MSNBC',
+                                         'title': "Joe: Trump's message of 'America sucks' is his "
+                                                  'most offensive lie'},
+                                        {'_score': 1.1187161,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:17:01.523Z',
+                                         'date': '2024-03-06T12:00:43.000Z',
+                                         'description': 'Read Northern Trust Corp Has $34.70 '
+                                                        'Million Position in Installed Building '
+                                                        'Products, Inc. (NYSE:IBP) at Defense World',
+                                         'hostname': 'defenseworld.net',
+                                         'id': '69d426be6f38434d652c180a1ff1294d',
+                                         'language': 'EN',
+                                         'link': 'https://www.defenseworld.net/2024/03/06/northern-trust-corp-has-34-70-million-position-in-installed-building-products-inc-nyseibp.html',
+                                         'props': {'description': 'Northern Trust Corp lifted its '
+                                                                  'position in shares of Installed '
+                                                                  'Building Products, Inc. '
+                                                                  '(NYSE:IBP – Free Report) by 0.9% '
+                                                                  'in the 3rd quarter, Holdings '
+                                                                  'Channel reports. The '
+                                                                  'institutional investor owned '
+                                                                  '277,868 shares of the '
+                                                                  'construction company’s stock '
+                                                                  'after purchasing an additional '
+                                                                  '2,466 shares during the quarter. '
+                                                                  'Northern Trust Corp’s holdings '
+                                                                  'in Installed Building Products '
+                                                                  'were […]',
+                                                   'image': 'https://www.americanbankingnews.com/wp-content/timthumb/timthumb.php?src=https://www.marketbeat.com/logos/installed-building-products-inc-logo-1200x675.png&w=240&h=240&zc=2',
+                                                   'image:height': '240',
+                                                   'image:width': '240',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'Defense World',
+                                                   'title': 'Northern Trust Corp Has $34.70 Million '
+                                                            'Position in Installed Building '
+                                                            'Products, Inc. (NYSE:IBP)',
+                                                   'type': 'article',
+                                                   'url': 'https://www.defenseworld.net/2024/03/06/northern-trust-corp-has-34-70-million-position-in-installed-building-products-inc-nyseibp.html'},
+                                         'source': 'Defense World',
+                                         'title': 'Northern Trust Corp Has $34.70 Million Position '
+                                                  'in Installed Building Products, Inc. (NYSE:IBP) '
+                                                  '- Defense World'},
+                                        {'_score': 1.1254693,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:18:22.457Z',
+                                         'date': '2024-03-06T12:00:15.000Z',
+                                         'description': 'The Indiana Pacers got themselves a '
+                                                        'much-needed win on Tuesday night over the '
+                                                        'Mavericks, their second of which since the '
+                                                        'All-Star break. Here are grades for each '
+                                                        'Pacer player in that matchup.',
+                                         'hostname': '8points9seconds.com',
+                                         'id': 'fbb15b43e51eb5920f89c9af59bc339a',
+                                         'language': 'EN',
+                                         'link': 'https://8points9seconds.com/posts/player-grades-for-indiana-pacers-after-big-win-against-the-mavericks-01hr8mkxbv47',
+                                         'props': {'description': 'The Indiana Pacers got '
+                                                                  'themselves a much-needed win on '
+                                                                  'Tuesday night over the '
+                                                                  'Mavericks, their second of which '
+                                                                  'since the All-Star break.',
+                                                   'image': 'https://images2.minutemediacdn.com/image/upload/c_crop,w_8256,h_4644,x_0,y_0/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/105/01hr8xs2tb9yngw8h6pr.jpg',
+                                                   'image:height': '810',
+                                                   'image:width': '1440',
+                                                   'site_name': '8 Points 9 Seconds',
+                                                   'title': 'Player grades for Indiana Pacers after '
+                                                            'big win against the Mavericks',
+                                                   'type': 'article',
+                                                   'url': 'https://8points9seconds.com/posts/player-grades-for-indiana-pacers-after-big-win-against-the-mavericks-01hr8mkxbv47'},
+                                         'source': '8 Points, 9 Seconds',
+                                         'title': 'Player grades for Indiana Pacers after big win '
+                                                  'against the Mavericks'},
+                                        {'_score': 1.1217749,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:16:58.700Z',
+                                         'date': '2024-03-06T12:00:10.000Z',
+                                         'description': 'The vibrant and lively existence of the '
+                                                        'mega-region is being poisoned by seeds of '
+                                                        'discord as the international milieu is '
+                                                        'becoming increasingly securitized by the '
+                                                        'US-China rivalry.',
+                                         'hostname': 'moderndiplomacy.eu',
+                                         'id': 'd5c07d12eb97d33f0b7cffc440b34f4f',
+                                         'language': 'EN',
+                                         'link': 'https://moderndiplomacy.eu/2024/03/06/creeping-nuclearization-in-the-asia-pacific/',
+                                         'props': {'description': 'The vibrant and lively existence '
+                                                                  'of the mega-region is being '
+                                                                  'poisoned by seeds of discord as '
+                                                                  'the international milieu is '
+                                                                  'becoming increasingly '
+                                                                  'securitized by the US-China '
+                                                                  'rivalry.',
+                                                   'image': 'https://moderndiplomacy.eu/wp-content/uploads/2021/07/nuclear-proliferation.jpg',
+                                                   'image:height': '800',
+                                                   'image:type': 'image/jpeg',
+                                                   'image:width': '1200',
+                                                   'locale': 'en_US',
+                                                   'site_name': 'Modern Diplomacy',
+                                                   'title': 'Creeping Nuclearization in the '
+                                                            'Asia-Pacific',
+                                                   'type': 'article',
+                                                   'url': 'https://moderndiplomacy.eu/?p=71164'},
+                                         'source': 'Modern Diplomacy',
+                                         'title': 'Creeping Nuclearization in the Asia-Pacific - '
+                                                  'Modern Diplomacy'},
+                                        {'_score': 1.1254693,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:12:28.928Z',
+                                         'date': '2024-03-06T12:00:07.000Z',
+                                         'description': 'Public resistance to the CAA has returned '
+                                                        'to the forefront in Assam after Union home '
+                                                        'minister Amit Shah announced the plan to '
+                                                        'notify and implement the citizenship act '
+                                                        'last month.',
+                                         'hostname': 'thewire.in',
+                                         'id': '967cf17fe5e09afa48cb39672e8ad77a',
+                                         'language': 'EN',
+                                         'link': 'https://thewire.in/government/volatile-situation-likely-to-arise-if-caa-implemented-16-assam-opposition-parties-to-modi',
+                                         'props': {'description': 'Public resistance to the CAA has '
+                                                                  'returned to the forefront in '
+                                                                  'Assam after Union home minister '
+                                                                  'Amit Shah announced the plan to '
+                                                                  'notify and implement the '
+                                                                  'citizenship act last month.',
+                                                   'image': 'https://cdn.thewire.in/wp-content/uploads/2024/02/20094201/Untitled-design-15-800x400.jpg',
+                                                   'site_name': 'The Wire',
+                                                   'title': "'Volatile Situation Likely to Arise If "
+                                                            "CAA Implemented': 16 Assam Opposition "
+                                                            'Parties to Modi',
+                                                   'url': 'https://thewire.in/government/volatile-situation-likely-to-arise-if-caa-implemented-16-assam-opposition-parties-to-modi'},
+                                         'source': 'The Wire',
+                                         'title': "'Volatile Situation Likely to Arise If CAA "
+                                                  "Implemented': 16 Assam Opposition Parties to "
+                                                  'Modi'},
+                                        {'_score': 1.1204053,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:15:53.741Z',
+                                         'date': '2024-03-06T12:00:00.000Z',
+                                         'description': '/PRNewswire-PRWeb/ -- Bergeson & Campbell, '
+                                                        'P.C. (B&C®) and The Acta Group (Acta®) are '
+                                                        'pleased to announce that Karin F. Baron, '
+                                                        'MSPH, Director of Hazard...',
+                                         'hostname': 'prweb.com',
+                                         'id': 'fd485beb9e639c40f01076b445535f87',
+                                         'language': 'EN',
+                                         'link': 'https://www.prweb.com/releases/karin-f-baron-msph-elected-as-secretarytreasurer-of-the-society-for-chemical-hazard-communication-302081119.html',
+                                         'props': {'description': '/PRNewswire-PRWeb/ -- Bergeson & '
+                                                                  'Campbell, P.C. (B&C®) and The '
+                                                                  'Acta Group (Acta®) are pleased '
+                                                                  'to announce that Karin F. Baron, '
+                                                                  'MSPH, Director of Hazard...',
+                                                   'image': 'https://mma.prnewswire.com/media/2355134/Karin_F_Baron.jpg?p=facebook',
+                                                   'title': 'Karin F. Baron, MSPH Elected as '
+                                                            'Secretary/Treasurer of the Society for '
+                                                            'Chemical Hazard Communication',
+                                                   'type': 'articles',
+                                                   'url': 'https://www.prweb.com/releases/karin-f-baron-msph-elected-as-secretarytreasurer-of-the-society-for-chemical-hazard-communication-302081119.html'},
+                                         'source': 'PR Web',
+                                         'title': 'Karin F. Baron, MSPH Elected as '
+                                                  'Secretary/Treasurer of the Society for Chemical '
+                                                  'Hazard Communication'},
+                                        {'_score': 1.119704,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:17:06.516Z',
+                                         'date': '2024-03-06T12:00:00.000Z',
+                                         'description': 'Despite wartime challenges, SOLO for '
+                                                        'Diamonds and Alkor-D continue operation, '
+                                                        'producing lab-grown diamonds and fine '
+                                                        'jewelry in the Ukraine.',
+                                         'hostname': 'forbes.com',
+                                         'id': 'e98e593b1705560f9e706f56706338ee',
+                                         'language': 'EN',
+                                         'link': 'https://www.forbes.com/sites/geristengel/2024/03/06/woman-founder-keeps-ukrainian-diamond-factory-open-despite-war/',
+                                         'props': {'description': 'Despite wartime challenges, SOLO '
+                                                                  'for Diamonds and Alkor-D '
+                                                                  'continue operation, producing '
+                                                                  'lab-grown diamonds and fine '
+                                                                  'jewelry in the Ukraine.',
+                                                   'image': 'https://imageio.forbes.com/specials-images/imageserve/65e55f2c38e4f63c7c8e164d/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds',
+                                                   'site_name': 'Forbes',
+                                                   'title': 'Female Founder Keeps Ukrainian Diamond '
+                                                            'Factory Open Despite War',
+                                                   'type': 'article',
+                                                   'url': 'https://www.forbes.com/sites/geristengel/2024/03/06/woman-founder-keeps-ukrainian-diamond-factory-open-despite-war/'},
+                                         'source': 'Forbes',
+                                         'title': 'Female Founder Keeps Ukrainian Diamond Factory '
+                                                  'Open Despite War'},
+                                        {'_score': 1.1168035,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:16:41.000Z',
+                                         'date': '2024-03-06T12:00:00.000Z',
+                                         'description': '/PRNewswire/ -- Bio-Techne Corporation '
+                                                        '(NASDAQ: TECH) today announced that Kim '
+                                                        'Kelderman, President and Chief Executive '
+                                                        'Officer, will present at the Barclays...',
+                                         'hostname': 'prnewswire.com',
+                                         'id': '8af35901c2bbf7fa02fcbce7308bcc22',
+                                         'language': 'EN',
+                                         'link': 'https://www.prnewswire.com/news-releases/bio-techne-to-present-at-the-barclays-26th-annual-global-healthcare-conference-302080964.html',
+                                         'props': {'description': '/PRNewswire/ -- Bio-Techne '
+                                                                  'Corporation (NASDAQ: TECH) today '
+                                                                  'announced that Kim Kelderman, '
+                                                                  'President and Chief Executive '
+                                                                  'Officer, will present at the '
+                                                                  'Barclays...',
+                                                   'image': 'https://mma.prnewswire.com/media/363268/Bio_Techne__Logo.jpg?p=facebook',
+                                                   'title': 'BIO-TECHNE TO PRESENT AT THE BARCLAYS '
+                                                            '26th ANNUAL GLOBAL HEALTHCARE '
+                                                            'CONFERENCE',
+                                                   'type': 'articles',
+                                                   'url': 'https://www.prnewswire.com/news-releases/bio-techne-to-present-at-the-barclays-26th-annual-global-healthcare-conference-302080964.html'},
+                                         'source': 'PR Newswire',
+                                         'title': 'BIO-TECHNE TO PRESENT AT THE BARCLAYS 26th '
+                                                  'ANNUAL GLOBAL HEALTHCARE CONFERENCE'},
+                                        {'_score': 1.1217749,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:11:32.898Z',
+                                         'date': '2024-03-06T12:00:00.000Z',
+                                         'description': 'We’re going over everything you need to '
+                                                        'know for the Big South Tournament, '
+                                                        'including bracket, seeding, schedule and '
+                                                        'odds to win.',
+                                         'hostname': 'dknetwork.draftkings.com',
+                                         'id': '6c63f0096670329ae7b91a48c3c13343',
+                                         'language': 'EN',
+                                         'link': 'https://dknetwork.draftkings.com/2024/3/6/24084736/big-south-tournament-2024-bracket-schedule-odds-march-madness-bids',
+                                         'props': {'description': 'We’re going over everything you '
+                                                                  'need to know for the Big South '
+                                                                  'Tournament, including bracket, '
+                                                                  'seeding, schedule and odds to '
+                                                                  'win.',
+                                                   'image': 'https://cdn.vox-cdn.com/thumbor/GemoS7aifDvbS4vOzdebiuU7WsI=/0x0:4831x2529/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/25318410/usa_today_20249316.jpg',
+                                                   'image:alt': 'NCAA Basketball: NCAA Tournament '
+                                                                'First Round-UNC Asheville vs UCLA',
+                                                   'image:height': '630',
+                                                   'image:width': '1200',
+                                                   'site_name': 'DraftKings Network',
+                                                   'title': '2024 Big South Belt Tournament '
+                                                            'bracket: Seeding, matchups, schedule, '
+                                                            'odds',
+                                                   'type': 'article',
+                                                   'url': 'https://dknetwork.draftkings.com/2024/3/6/24084736/big-south-tournament-2024-bracket-schedule-odds-march-madness-bids'},
+                                         'source': 'DraftKings',
+                                         'title': '2024 Big South Tournament bracket: Seeding, '
+                                                  'matchups, schedule, odds to win, March Madness '
+                                                  'bids - DraftKings Network'},
+                                        {'_score': 1.1286507,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:15:54.397Z',
+                                         'date': '2024-03-06T12:00:00.000Z',
+                                         'description': 'Believe it or not spring is in the way and '
+                                                        'warmer temps are coming fast. That gets '
+                                                        'everyone in the mood for the upcoming '
+                                                        'growing season. I get a lot',
+                                         'hostname': 'pmg-ky2.com',
+                                         'id': '60e1eea969a952657f02465f67e77e12',
+                                         'language': 'EN',
+                                         'link': 'https://www.pmg-ky2.com/larue/news/agriculture/its-time-to-soil-sample/article_2131c38d-fad1-5363-b4cc-922f02537dd0.html',
+                                         'props': {'description': 'Believe it or not spring is in '
+                                                                  'the way and warmer temps are '
+                                                                  'coming fast. That gets everyone '
+                                                                  'in the mood for the upcoming '
+                                                                  'growing season. I get a lot',
+                                                   'image': 'https://bloximages.newyork1.vip.townnews.com/pmg-ky2.com/content/tncms/custom/image/281d7896-458b-11ed-a238-4f4d4bfdf935.jpg?resize=600%2C128',
+                                                   'image:height': '128',
+                                                   'image:width': '600',
+                                                   'section': 'Agriculture',
+                                                   'site_name': 'Paxton Media Group Kentucky Pub '
+                                                                'Group2',
+                                                   'title': "It's Time to Soil Sample",
+                                                   'type': 'article',
+                                                   'url': 'https://www.pmg-ky2.com/larue/news/agriculture/its-time-to-soil-sample/article_2131c38d-fad1-5363-b4cc-922f02537dd0.html'},
+                                         'source': 'pmg-ky2.com',
+                                         'title': "It's Time to Soil Sample | Agriculture | "
+                                                  'pmg-ky2.com'},
+                                        {'_score': 1.1254693,
+                                         'body': None,
+                                         'created_at': '2024-03-06T12:15:54.461Z',
+                                         'date': '2024-03-06T12:00:00.000Z',
+                                         'description': None,
+                                         'hostname': 'pmg-ky2.com',
+                                         'id': '5c86ce52aa278f36e5cc52d0dda5871f',
+                                         'language': 'EN',
+                                         'link': 'https://www.pmg-ky2.com/larue/news/agriculture/blackberries-in-kentucky/article_cd5f5717-1615-5794-a6c5-39004e110aa1.html',
+                                         'props': {},
+                                         'source': 'pmg-ky2.com',
+                                         'title': ''}],
+                               'next_cursor': 'eyJzb3J0IjpbMTcwOTcyNjQwMDAwMCwiNWM4NmNlNTJhYTI3OGYzNmU1Y2M1MmQwZGRhNTg3MWYiXX0=',
+                               'total': 10000},
+                      'success': True}
+ic| type(news): <class 'requests.models.Response'>
+ic| news: <Response [200]>
+ic| dir(news): ['__attrs__',
+                '__bool__',
+                '__class__',
+                '__delattr__',
+                '__dict__',
+                '__dir__',
+                '__doc__',
+                '__enter__',
+                '__eq__',
+                '__exit__',
+                '__format__',
+                '__ge__',
+                '__getattribute__',
+                '__getstate__',
+                '__gt__',
+                '__hash__',
+                '__init__',
+                '__init_subclass__',
+                '__iter__',
+                '__le__',
+                '__lt__',
+                '__module__',
+                '__ne__',
+                '__new__',
+                '__nonzero__',
+                '__reduce__',
+                '__reduce_ex__',
+                '__repr__',
+                '__setattr__',
+                '__setstate__',
+                '__sizeof__',
+                '__str__',
+                '__subclasshook__',
+                '__weakref__',
+                '_content',
+                '_content_consumed',
+                '_next',
+                'apparent_encoding',
+                'close',
+                'connection',
+                'content',
+                'cookies',
+                'elapsed',
+                'encoding',
+                'headers',
+                'history',
+                'is_permanent_redirect',
+                'is_redirect',
+                'iter_content',
+                'iter_lines',
+                'json',
+                'links',
+                'next',
+                'ok',
+                'raise_for_status',
+                'raw',
+                'reason',
+                'request',
+                'status_code',
+                'text',
+                'url']
