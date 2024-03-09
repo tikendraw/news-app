@@ -5,7 +5,7 @@ from icecream import ic
 
 from core.db import Session
 from core.db.db_utils import *
-from core.news_api import GNewsAPI, NewsDataAPI
+from core.news_api import GNewsAPI, GoogleNewsAPI, NewsDataAPI
 
 load_dotenv()
 
@@ -17,11 +17,11 @@ load_dotenv()
 # # print(news)
 # add_articles_to_db(session=Session(), articles=news)
 
-newsdata_apikey = os.environ.get("NEWSDATA_API_KEY")
-newsdata = NewsDataAPI(apikey=newsdata_apikey)
+# newsdata_apikey = os.environ.get("NEWSDATA_API_KEY")
+# newsdata = NewsDataAPI(apikey=newsdata_apikey)
 
-response = newsdata.get_news(country="jp")
-print(response)
+# response = newsdata.get_news(country="jp")
+# print(response)
 
 # response = newsdata.get_news(country='jp')
 # print(response)
@@ -34,3 +34,13 @@ print(response)
 #     print(i['title'])
 #     print(i['link'])
 #     print()
+
+
+# Google news test
+google_news_apikey = os.environ.get("X-RapidAPI-Key")
+gnapi = GoogleNewsAPI(apikey=google_news_apikey)
+
+news = gnapi._make_request()
+ic(type(news))
+ic(news)
+ic(dir(news))
