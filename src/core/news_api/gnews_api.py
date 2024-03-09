@@ -6,7 +6,7 @@ from typing import Optional
 from icecream import ic
 from pydantic import BaseModel, Field, root_validator, validator
 
-from ..news_model import NewsArticle
+from ..news_model import GNewsArticle
 from .base_api import NewsAPI
 
 LANGUAGES = [
@@ -112,14 +112,14 @@ class GNewsAPI(NewsAPI):
 
         self.base_url = f"https://gnews.io/api/v4/top-headlines?category={self.category}&lang={self.lang}&country={self.country}&max={self.n_news}&apikey={self.apikey}"
 
-    def parse_news(self, data: dict) -> Optional[list[NewsArticle]]:
+    def parse_news(self, data: dict) -> Optional[list[GNewsArticle]]:
         articles = data.get("articles", [])
         if len(articles) > 0:
-            return [NewsArticle(**article_data) for article_data in articles]
+            return [GNewsArticle(**article_data) for article_data in articles]
         else:
             return None
 
-    def get_news(self) -> Optional[list[NewsArticle]]:
+    def get_news(self) -> Optional[list[GNewsArticle]]:
         try:
             with urllib.request.urlopen(self.base_url) as response:
                 if response.status in self.ERROR_MESSAGES:
@@ -183,13 +183,13 @@ class GNewsAPI(NewsAPI):
 #             return f"{base_endpoint}top-headlines?{encoded_params}"
 
 
-#     def parse_news(self, data: dict) -> Optional[list[NewsArticle]]:
+#     def parse_news(self, data: dict) -> Optional[list[GNewsArticle]]:
 #         if articles := data.get('articles', []):
-#             return [NewsArticle(**article_data) for article_data in articles]
+#             return [GNewsArticle(**article_data) for article_data in articles]
 #         else:
 #             return None
 
-#     def get_news(self) -> Optional[list[NewsArticle]]:
+#     def get_news(self) -> Optional[list[GNewsArticle]]:
 #         url = self.base_url
 #         ic(url)
 #         with urllib.request.urlopen(url) as response:
