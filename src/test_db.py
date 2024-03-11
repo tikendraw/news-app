@@ -5,7 +5,7 @@ from core.db.news_tables import NewsArticleORM, ScienceArticleORM
 from core.news_schema import NewsArticle
 
 news = NewsArticle(
-    title="scienc",
+    title="science",
     content="test science",
 )
 
