@@ -1,12 +1,23 @@
-from typing import Iterable, List
+from typing import Iterable, List, Type
 
 # Function to parse JSON articles and insert into database if valid
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from ..news_model import NewsArticle
+from ..news_schema import NewsArticle
 from . import Session
-from .news_table import NewsArticleORM
+from .news_tables import Base, NewsArticleORM, ScienceArticleORM, SportsArticleORM
+
+
+def get_db():
+    db = Session()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+# Function to add articles to database
 
 
 class AddArticleError(Exception):
@@ -27,124 +38,123 @@ class DatabaseError(Exception):
     pass
 
 
-def add_article_to_db(article: NewsArticle, session: Session) -> None:
+def add_article_to_db(article: NewsArticle, session: Session, orm_class: Type):
     """
-    Add a single article to the database if it doesn't exist.
+    Adds an article to the database. Rolls back the transaction if the article already exists.
+
+
+    Parameters
+    ----------
+    article: The article to add.
+    session: The database session.
+    orm_class: The ORM class to use for the article.
+
+
     """
+    article_orm = orm_class(
+        published_at=article.published_at,
+        title=article.title,
+        author=article.author,
+        category=article.category,
+        description=article.description,
+        content=article.content,
+        url=article.url,
+        image=article.image,
+        source_name=article.source_name,
+        source_url=article.source_url,
+    )
+
+    session.add(article_orm)
+
     try:
-        article_orm = NewsArticleORM(
-            title=article.title,
-            description=article.description,
-            content=article.content,
-            url=str(article.url),
-            image=str(article.image),
-            published_at=article.published_at,
-            source_name=article.source_name,
-            source_url=str(article.source_url),
-        )
-        session.add(article_orm)
         session.commit()
-    except Exception as e:
+    except IntegrityError:
         session.rollback()
-        raise AddArticleError(
-            f"Failed to add article '{article.title}' to database: {str(e)}"
-        )
 
 
-def update_article_in_db(article: NewsArticle, session: Session) -> None:
+def update_article_in_db(article: NewsArticle, session: Session, orm_class: Type):
     """
-    Update an existing article in the database.
+    Updates an article in the database. Rolls back the transaction if the article does not exist.
+
+
+    Parameters
+    ----------
+    article: The article to update.
+    session: The database session.
+    orm_class: The ORM class to use for the article.
+
+
     """
-    try:
-        article_orm = (
-            session.query(NewsArticleORM).filter_by(url=str(article.url)).first()
-        )
-        if article_orm:
-            article_orm.title = article.title
-            article_orm.description = article.description
-            article_orm.content = article.content
-            article_orm.image = str(article.image)
-            article_orm.published_at = article.published_at
-            article_orm.source_name = article.source.name
-            article_orm.source_url = str(article.source.url)
-            session.commit()
-        else:
-            raise UpdateArticleError(
-                f"Article with URL '{article.url}' not found in database. Skipping update."
-            )
-    except Exception as e:
-        session.rollback()
-        raise UpdateArticleError(
-            f"Failed to update article with URL '{article.url}' in database: {str(e)}"
-        )
+    article_orm = session.query(orm_class).filter_by(url=article.url).first()
 
+    if article_orm is None:
+        raise UpdateArticleError(f"Article with URL {article.url} does not exist.")
+    else:
+        article_orm.published_at = article.published_at
+        article_orm.title = article.title
+        article_orm.author = article.author
+        article_orm.category = article.category
+        article_orm.description = article.description
+        article_orm.content = article.content
+        article_orm.url = article.url
+        article_orm.image = article.image
+        article_orm.source_name = article.source_name
+        article_orm.source_url = article.source_url
 
-def add_articles_to_db(articles: Iterable[NewsArticle], session: Session) -> None:
-    """
-    Add a list of articles to the database.
-    """
-    add_count = 0
-    update_count = 0
-    for article in articles:
-        if not isinstance(article, NewsArticle):
-            raise TypeError("Articles must be a list of NewsArticle objects.")
-        try:
-            if (
-                not session.query(NewsArticleORM)
-                .filter_by(url=str(article.url))
-                .first()
-            ):
-                add_article_to_db(article, session)
-                add_count += 1
-            else:
-                update_article_in_db(article, session)
-                update_count += 1
-        except (AddArticleError, UpdateArticleError) as e:
-            print(f"Error occurred while processing article: {str(e)}")
-
-    if add_count:
-        print(f"Added {add_count} articles to database.")
-    if update_count:
-        print(f"Updated {update_count} articles in database.")
-
-
-# Function to retrieve articles from database
-def get_articles_from_db(session: Session) -> List[NewsArticleORM]:
-    """Retrieve all articles from the database."""
-    try:
-        return session.query(NewsArticleORM).all()
-    except Exception as e:
-        raise DatabaseError(f"Failed to retrieve articles from database: {str(e)}")
-
-
-def get_n_latest_articles_from_db(session: Session, n: int) -> List[NewsArticleORM]:
-    """Retrieve the latest n articles from the database."""
-    try:
-        return (
-            session.query(NewsArticleORM)
-            .order_by(NewsArticleORM.published_at.desc())
-            .limit(n)
-            .all()
-        )
-    except Exception as e:
-        raise DatabaseError(
-            f"Failed to retrieve latest articles from database: {str(e)}"
-        )
-
-
-def delete_article_from_db(session: Session, article_id: int) -> None:
-    """Delete an article from the database by its ID."""
-    try:
-        session.query(NewsArticleORM).filter(NewsArticleORM.id == article_id).delete()
         session.commit()
-    except Exception as e:
-        raise DatabaseError(f"Failed to delete article from database: {str(e)}")
 
 
-def delete_all_articles_from_db(session: Session) -> None:
-    """Delete all articles from the database."""
-    try:
-        session.query(NewsArticleORM).delete()
-        session.commit()
-    except Exception as e:
-        raise DatabaseError(f"Failed to delete all articles from database: {str(e)}")
+def get_articles_from_db(session: Session, orm_class: Type):
+    """
+    Gives all articles from database.
+
+    Parameters:
+    ------------
+    session: The database session.
+    orm_class: The ORM class to use for the article.
+
+    Returns:
+    ------------
+    articles: A list of all articles in the database.
+
+    """
+    return session.query(orm_class).all()
+
+
+def get_n_articles_from_db(session: Session, orm_class: Type, n: int):
+    """
+    Get n articles from database.
+
+    Parameters:
+    -----------
+    session: The database session.
+    orm_class: The ORM class to use for the article.
+    n: The number of articles to get.
+
+    Returns:
+    -----------
+    articles: A list of n articles from the database.
+
+    """
+    return session.query(orm_class).limit(n).all()
+
+
+def delete_article_from_db(article: NewsArticle, session: Session, orm_class: Type):
+    """
+    Deletes article from database.
+
+    Parameters:
+    ----------
+    article: The article to delete.
+    session: The database session.
+    orm_class: The ORM class to use for the article.
+
+    """
+
+    article_orm = session.query(orm_class).filter_by(url=article.url).first()
+
+    if article_orm is None:
+        raise DatabaseError(f"Article with URL {article.url} does not exist.")
+
+    session.delete(article_orm)
+    session.commit()

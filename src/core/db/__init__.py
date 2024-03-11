@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column, sessionmaker
 
-from .news_table import Base, NewsArticleORM
+from .news_tables import Base, NewsArticleORM
 
 # Create SQLite engine and session
 engine = create_engine("sqlite:///database/articles.db")

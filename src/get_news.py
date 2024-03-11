@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from dotenv import load_dotenv
 from icecream import ic
@@ -6,6 +7,7 @@ from icecream import ic
 from core.db import Session
 from core.db.db_utils import *
 from core.news_api import GNewsAPI, GoogleNewsAPI, NewsDataAPI
+from core.utils import rate_limiter
 
 load_dotenv()
 
@@ -37,10 +39,27 @@ load_dotenv()
 
 
 # Google news test
-google_news_apikey = os.environ.get("X-RapidAPI-Key")
-gnapi = GoogleNewsAPI(apikey=google_news_apikey)
+# google_news_apikey = os.environ.get("X-RapidAPI-Key")
+# gnapi = GoogleNewsAPI(apikey=google_news_apikey)
 
-news = gnapi._make_request()
-ic(type(news))
-ic(news)
-ic(dir(news))
+# news = gnapi._make_request()
+# ic(type(news))
+# ic(news)
+# ic(dir(news))
+
+
+# @rate_limiter_with_wait(requests_per_second=2, requests_per_minute=3, wait=True)
+# def req():
+#     print(datetime.now(),':: hi')
+
+limits = {1: 2, 60: 3}  # 2 req/sec  # 3 req/min
+
+
+@rate_limiter_with_wait(requests_per_second=4, requests_per_minute=3, wait=True)
+def req():
+    print(datetime.now(), ":: hi")
+
+
+if __name__ == "__main__":
+    for i in range(7):
+        req()

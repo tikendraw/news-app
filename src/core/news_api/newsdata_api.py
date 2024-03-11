@@ -8,7 +8,7 @@ from icecream import ic
 from newsdataapi import NewsDataApiClient
 from pydantic import BaseModel, Field, root_validator, validator
 
-from ..news_model import NewsDataArticle
+from ..news_schema import NewsDataArticle
 from .base_api import NewsAPI
 
 # COUNTRIES = [

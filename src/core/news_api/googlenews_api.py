@@ -5,7 +5,7 @@ import requests
 from icecream import ic
 from pydantic import BaseModel, Field, HttpUrl
 
-from ..news_model import NewsDataArticle
+from ..news_schema import NewsDataArticle
 from .base_api import NewsAPI
 
 LANGUAGES = ["TR", "EN", "FR", "DE", "IT", "ZH", "ES", "RU", "KO", "PT"]

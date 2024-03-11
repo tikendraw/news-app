@@ -4,7 +4,7 @@ from typing import List, Optional
 import requests
 from pydantic import BaseModel
 
-from ..news_model import NewsArticle
+from ..news_schema import NewsArticle
 
 
 class NewsAPI:

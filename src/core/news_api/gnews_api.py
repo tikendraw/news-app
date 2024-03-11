@@ -6,7 +6,7 @@ from typing import Optional
 from icecream import ic
 from pydantic import BaseModel, Field, root_validator, validator
 
-from ..news_model import GNewsArticle
+from ..news_schema import GNewsArticle
 from .base_api import NewsAPI
 
 LANGUAGES = [
@@ -132,87 +132,3 @@ class GNewsAPI(NewsAPI):
             raise GNewsAPIError(
                 "Failed to parse response data. JSON decoding error."
             ) from e
-
-
-# class TestNews(BaseModel):
-#     apikey: str
-#     category: str = None
-#     query: str = None
-#     n_news: int = None
-#     lang: str = None
-#     country: str = None
-#     base_url: str = None
-
-#     class Config:
-#         allow_mutation_of_frozen_self = True
-
-#     @validator('apikey')
-#     def build_url(cls, value):
-#         if not value:
-#             raise ValueError("API key is required")
-#         cls.base_url = cls._build_url(cls)
-#         return value
-
-#     def _build_url(self) -> str:
-#         base_endpoint = "https://gnews.io/api/v4/"
-#         if self.query:
-#             # If query is provided, use search endpoint
-#             params = {
-#                 'q': self.query,
-#                 'lang': self.lang,
-#                 'country': self.country,
-#                 'max': self.n_news,
-#                 'apikey': self.apikey
-#             }
-#             params = {key: value for key, value in params.items() if value is not None}
-
-#             encoded_params = urllib.parse.urlencode(params)
-#             return f"{base_endpoint}search?{encoded_params}"
-#         else:
-#             # Use top-headlines endpoint
-#             params = {
-#                 'category': self.category,
-#                 'lang': self.lang,
-#                 'country': self.country,
-#                 'max': self.n_news,
-#                 'apikey': self.apikey
-#             }
-#             params = {key: value for key, value in params.items() if value is not None}
-
-#             encoded_params = urllib.parse.urlencode(params)
-#             return f"{base_endpoint}top-headlines?{encoded_params}"
-
-
-#     def parse_news(self, data: dict) -> Optional[list[GNewsArticle]]:
-#         if articles := data.get('articles', []):
-#             return [GNewsArticle(**article_data) for article_data in articles]
-#         else:
-#             return None
-
-#     def get_news(self) -> Optional[list[GNewsArticle]]:
-#         url = self.base_url
-#         ic(url)
-#         with urllib.request.urlopen(url) as response:
-#             data = json.loads(response.read().decode("utf-8"))
-#             return self.parse_news(data)
-
-
-#     @validator('lang')
-#     def validate_lang(cls, value):
-#         # Language code validation
-#         if value.lower() not in LANGUAGES:
-#             raise ValueError(f"Invalid language code: {value}")
-#         return value
-
-#     @validator('country')
-#     def validate_country(cls, value):
-#         # Country code validation
-#         if value.lower() not in COUNTRIES:
-#             raise ValueError(f"Invalid country code: {value}")
-#         return value
-
-#     @validator('query')
-#     def validate_query(cls, value):
-#         if value and len(value) < 3:
-#             raise ValueError("Query must be at least 3 characters long")
-#         return value
