@@ -1,7 +1,7 @@
 import os
 from box.exceptions import BoxValueError
 import yaml
-from src.logging import logger
+from src.core.logging import logger
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
