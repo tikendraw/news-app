@@ -2,7 +2,7 @@ from icecream import ic
 
 from core.db import Session
 from core.db.news_tables import NewsArticleORM, ScienceArticleORM
-from core.news_schema import NewsArticle
+from core.sources.schemas import NewsArticle
 
 news = NewsArticle(
     title="science",

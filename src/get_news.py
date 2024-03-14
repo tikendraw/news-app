@@ -6,7 +6,7 @@ from icecream import ic
 
 from core.db import Session
 from core.db.db_utils import *
-from core.news_api import GNewsAPI, GoogleNewsAPI, NewsDataAPI
+from core.sources.apis import GNewsAPI, GoogleNewsAPI, NewsDataAPI
 from core.utils import rate_limiter
 
 load_dotenv()
