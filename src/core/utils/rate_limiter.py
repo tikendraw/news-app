@@ -2,7 +2,7 @@
 
 import hashlib
 import json
-import logging
+from ..logging import logger
 import os
 import time
 from datetime import datetime
@@ -11,12 +11,6 @@ from functools import wraps
 # Create a temporary directory for usage data files
 TEMP_DIR = ".api_usage_data"
 os.makedirs(TEMP_DIR, exist_ok=True)
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
 
 class RateLimitException(Exception):
     pass
@@ -36,17 +30,17 @@ def get_usage_file_name(func):
 #     if current_time < period_end:
 #         requests_this_period = usage_data.get(f"requests_this_{period_name}", 0)
 #         if requests_this_period >= limit:
-#             logging.warning(f"Rate limit reached: {requests_this_period}/{limit} requests per {period_name}.")
+#             logger.warning(f"Rate limit reached: {requests_this_period}/{limit} requests per {period_name}.")
 #             if wait:
 #                 # Calculate the wait time until the next period
 #                 wait_time = period_end - current_time
-#                 logging.info(f"Waiting {wait_time} seconds due to rate limit for {period_name}.")
+#                 logger.info(f"Waiting {wait_time} seconds due to rate limit for {period_name}.")
 #                 time.sleep(wait_time)
 #                 # Reset the usage data for the next period
 #                 usage_data[f"last_reset_{period_name}"] = current_time + period
 #                 usage_data[f"requests_this_{period_name}"] = 1
 #             else:
-#                 logging.error(f"Rate limit reached for requests per {period_name}.")
+#                 logger.error(f"Rate limit reached for requests per {period_name}.")
 #                 return True
 #         else:
 #             usage_data[f"requests_this_{period_name}"] = requests_this_period + 1
@@ -73,19 +67,19 @@ def check_rate_limit(usage_data, limit, period, wait):
     if current_time < period_end:
         requests_this_period = usage_data.get(f"requests_this_{period_name}", 0)
         if requests_this_period >= limit:
-            logging.warning(
+            logger.warning(
                 f"Rate limit reached: {requests_this_period}/{limit} requests per {period_name}."
             )
             if wait:
                 wait_time = period_end - current_time
-                logging.info(
+                logger.info(
                     f"Waiting {wait_time} seconds due to rate limit for {period_name}."
                 )
                 time.sleep(wait_time)
                 usage_data[f"last_reset_{period_name}"] = current_time + period
                 usage_data[f"requests_this_{period_name}"] = 1
             else:
-                logging.error(f"Rate limit reached for requests per {period_name}.")
+                logger.error(f"Rate limit reached for requests per {period_name}.")
                 return True
         else:
             usage_data[f"requests_this_{period_name}"] = requests_this_period + 1
@@ -102,15 +96,15 @@ def check_rate_limit(usage_data, limit, period, wait):
 
     # Check if requests made within the same second exceed the limit
     if requests_this_second > limit:
-        logging.warning(
+        logger.warning(
             f"Rate limit reached: {requests_this_second}/{limit} requests per second."
         )
         if wait:
             wait_time = 1 - (current_time - usage_data["request_times"][0])
-            logging.info(f"Waiting {wait_time} seconds due to rate limit for second.")
+            logger.info(f"Waiting {wait_time} seconds due to rate limit for second.")
             time.sleep(wait_time)
         else:
-            logging.error("Rate limit reached for requests per second.")
+            logger.error("Rate limit reached for requests per second.")
             return True
 
     return False
