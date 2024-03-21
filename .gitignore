@@ -90,3 +90,5 @@ target/
 .mypy_cache/
 
 artifacts/*
+bart-samsum-model/*
+tokenizer/*
