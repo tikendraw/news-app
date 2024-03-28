@@ -8,7 +8,7 @@ from icecream import ic
 from newsdataapi import NewsDataApiClient
 from pydantic import BaseModel, Field, root_validator, validator
 
-from ..schemas import NewsDataArticle
+from ..schema import NewsDataArticle
 from .base_api import NewsAPI
 
 # COUNTRIES = [
@@ -72,7 +72,7 @@ class NewsDataAPI(NewsAPI, NewsDataApiClient):
                 error_code = 0
 
             error_msg = self.ERROR_MESSAGES.get(error_code, "Unknown error")
-            raise Exception(f"Error {error_code}: {error_msg}")
+            raise NewsDataAPIError(f"Error {error_code}: {error_msg}")
         return response
 
     def parse_news(self, data: Dict) -> Optional[List[NewsDataArticle]]:

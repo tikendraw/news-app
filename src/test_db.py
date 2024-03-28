@@ -1,19 +1,13 @@
-from icecream import ic
 
-from core.db import Session
-from core.db.news_tables import NewsArticleORM, ScienceArticleORM
-from core.sources.schemas import NewsArticle
-
-news = NewsArticle(
-    title="science",
-    content="test science",
-)
-
-from core.db.db_utils import *
+from .core.db.db_utils import *
 
 db = next(get_db())
 
-# a = add_article_to_db(news, db, ScienceArticleORM)
-# print(a)
+from fastapi import FastAPI
 
-a = delete_article_from_db(news, db, ScienceArticleORM)
+from .core.routers import news_router
+
+app = FastAPI()
+
+app.include_router(news_router.article_router)
+

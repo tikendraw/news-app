@@ -5,7 +5,7 @@ import requests
 from icecream import ic
 from pydantic import BaseModel, Field, HttpUrl
 
-from ..news_schema import NewsDataArticle
+from ..schema import GoogleNewsArticle
 from .base_api import NewsAPI
 
 LANGUAGES = ["TR", "EN", "FR", "DE", "IT", "ZH", "ES", "RU", "KO", "PT"]
@@ -40,7 +40,7 @@ class GoogleNewsAPI(NewsAPI):
             "X-RapidAPI-Host": self.host,
         }
 
-    def _make_request(self, q: str = None, language: str = "EN") -> Optional[dict]:
+    def _make_request(self, q: str = None, language: str = "EN") -> requests.Response:
         if language not in LANGUAGES:
             raise ValueError(f"language must be one of {LANGUAGES}")
 
@@ -48,23 +48,18 @@ class GoogleNewsAPI(NewsAPI):
             "language": language,
             "q": q,
         }
-
         querystring = {i: j for i, j in querystring.items() if j is not None}
-        ic(querystring)
+
         response = requests.get(self.base_url, headers=self.headers, params=querystring)
-        ic(response.status_code)
-        ic(response)
-        ic(response.json())
+
         return response
 
-    def get_news(self, q: str, language: str = "EN") -> Optional[List[NewsDataArticle]]:
+    def get_news(self, q: str, language: str = "EN") -> Optional[List[GoogleNewsArticle]]:
         response = self._make_request(q, language)
         if response.status_code != 200:
             print(response.status_code, response.text)
             return None
-        news_data = response.json()
-        return [NewsDataArticle(**article) for article in news_data["news"]["news"]]
+        return self.parse_news(response.json())
 
-    def parse_news(self, news: dict) -> list[NewsDataArticle]:
-        # This method is not needed since we're parsing the response directly in get_news
-        raise NotImplementedError()
+    def parse_news(self, news: dict) -> list[GoogleNewsArticle]:
+        news_data = news['news']['news']
