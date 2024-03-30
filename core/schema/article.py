@@ -16,7 +16,7 @@ class Article(BaseModel):
     country: Optional[List[str]] = None
     language: Optional[List[str]] = None
     url: Optional[HttpUrl] = None
-    image: Optional[HttpUrl] = None
+    images: Optional[List[Dict]] = None
     published_at: Optional[datetime] = Field(alias="publishedAt", default=None)
     source_name: Optional[str]=None
     source_url: Optional[Union[HttpUrl, str]]=None
@@ -41,7 +41,7 @@ class ShowArticle(BaseModel):
     country: Optional[List[str]] = None
     language: Optional[List[str]] = None
     url: Optional[HttpUrl] = None
-    image: Optional[HttpUrl] = None
+    images: Optional[List[Dict]] = None
     published_at: Optional[datetime] = Field(alias="publishedAt", default=None)
     source_name: Optional[str] = None
     source_url: Optional[Union[HttpUrl, str]] = None

@@ -8,7 +8,7 @@ from ...schema.article import NewsArticle
 from .. import SessionLocal
 from ..db_exceptions import (AddArticleError, DatabaseError,
                              DeleteArticleError, UpdateArticleError)
-from ..news_tables import Base, NewsArticleORM
+from ..news_tables import Base
 
 
 # Funtions to do operation with db
@@ -33,7 +33,7 @@ def add_article(article: NewsArticle, db: Session, orm_class: Type):
         description=article.description,
         content=article.content,
         url=article.url,
-        image=article.image,
+        images=article.images,
         source_name=article.source_name,
         source_url=article.source_url,
     )

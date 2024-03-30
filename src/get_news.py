@@ -18,7 +18,7 @@ gnews_apikey = os.environ.get("GNEWS_API_KEY")
 gnews = GNewsAPI(apikey=gnews_apikey)
 
 news = gnews._make_request(
-    q = "sunny leone",
+    # q = "sunny leone",
     category="general", 
     max=10, 
     lang="en", 
