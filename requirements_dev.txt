@@ -5,7 +5,9 @@ requests-cache
 pre-commit
 python-dotenv
 newsdataapi
-
+icecream
+bs4
+fake-useragent
 transformers
 transformers[sentencepiece]
 datasets
