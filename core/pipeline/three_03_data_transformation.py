@@ -1,6 +1,5 @@
-from src.core.config.configuration import ConfigurationManager
-from src.core.components.data_transformation import DataTransformation
-from src.core.logging import logger
+from core.config.configuration import ConfigurationManager
+from core.components.data_transformation import DataTransformation
 
 
 class DataTransformationTrainingPipeline:

@@ -1,6 +1,5 @@
-from src.core.config.configuration import ConfigurationManager
-from src.core.components.data_ingestion import DataIngestion
-from src.core.logging import logger
+from core.config.configuration import ConfigurationManager
+from core.components.data_ingestion import DataIngestion
 
 
 class DataIngestionTrainingPipeline:

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Summary</title>
+  <title>Summary</title>
 </head>
 <body>
-    <h1>Summary</h1>
-    <p>{{ summary }}</p>
+  <h1>News Summaries</h1>
+  {% for article_summary in article_summaries %}
+    <h2>{{ article_summary.title }}</h2>
+    <p>{{ article_summary.summary }}</p>
+  {% endfor %}
 </body>
 </html>
+
