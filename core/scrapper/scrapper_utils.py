@@ -40,28 +40,6 @@ def scrape_links(soup:BeautifulSoup, url:str)->Dict:
             other_pages.append(absolute_url)
     return {"articles": list(articles), "other_pages": list(other_pages)}
 
-def scrape_links_cached(soup: BeautifulSoup, url: str) -> Dict:
-    articles = []
-    other_pages = []
-    cache = load_cache()  # Load the cache
-
-    for link in soup.find_all('a'):
-        relative_url = link.get('href')
-        if relative_url:
-            absolute_url = urljoin(url, relative_url)
-
-        if absolute_url.endswith('.html'):
-            if not is_url_cached(absolute_url, cache):  # Check if the URL is not cached
-                articles.append(absolute_url)
-                cache_url(absolute_url, cache)  # Add the URL to the cache
-        else:
-            if not is_url_cached(absolute_url, cache):  # Check if the URL is not cached
-                other_pages.append(absolute_url)
-                cache_url(absolute_url, cache)  # Add the URL to the cache
-
-    save_cache(cache)  # Save the updated cache
-
-    return {"articles": articles, "other_pages": other_pages}
 
 def get_response(url:str, headers=None, **kwargs)->requests.Response:
     response = requests.get(url, headers=headers, **kwargs)
