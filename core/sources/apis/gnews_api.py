@@ -136,7 +136,7 @@ class GNewsAPI(NewsAPI):
             if category:
                 article['category'] = [category]
             if country:
-                article['country'] = [country]
+                article['locations'] = [country]
             if language:
                 article['language'] = [language]
             if metadata:

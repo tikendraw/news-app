@@ -13,7 +13,8 @@ class Article(BaseModel):
     category: Optional[str] = None
     author: Optional[str] = None
     content: Optional[str] = None
-    country: Optional[List[str]] = None
+    content_summary : Optional[str] = None
+    locations: Optional[List[str]] = None
     language: Optional[List[str]] = None
     url: Optional[HttpUrl] = None
     images: Optional[List[Dict]] = None
@@ -38,7 +39,7 @@ class ShowArticle(BaseModel):
     category: Optional[str] = None
     author: Optional[str] = None
     content: Optional[str] = None
-    country: Optional[List[str]] = None
+    locations: Optional[List[str]] = None
     language: Optional[List[str]] = None
     url: Optional[HttpUrl] = None
     images: Optional[List[Dict]] = None

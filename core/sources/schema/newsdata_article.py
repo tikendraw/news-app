@@ -22,7 +22,7 @@ class NewsDataArticle(NewsArticle):
     source_url: Union[HttpUrl, str] = Field(alias="source_url")
     source_icon: Union[HttpUrl, str, None] = Field(alias="source_icon", default=None)
 
-    country: list = Field(alias="country", default=None)
+    locations: list = Field(alias="country", default=None)
     category: list = Field(alias="category", default=None)
     language: str = Field(alias="language", default="english")
     ai_tag: Union[list[str], str] = Field(alias="ai_tag", default=None)

@@ -33,6 +33,7 @@ def add_article(article: NewsArticle, db: Session, orm_class: Type):
         description=article.description,
         content=article.content,
         url=article.url,
+        content_summary=article.content_summary,
         images=article.images,
         source_name=article.source_name,
         source_url=article.source_url,

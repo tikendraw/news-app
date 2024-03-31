@@ -19,7 +19,7 @@ class GNewsArticle(NewsArticle):
     source_url: Optional[Union[HttpUrl, str]] = Field(default=None)
 
 
-    country: Union[list, None] = Field(alias="country", default=None)
+    locations: Union[list, None] = Field(alias="country", default=None)
     category: Union[list, None] = Field(alias="category", default=None)
     language: Union[str,None] = Field(alias="language", default=None)
     author: Union[list, None] = Field(alias="creator", default=None)

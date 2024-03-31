@@ -20,12 +20,13 @@ class NewsArticleORM(Base):
     category: Mapped[List[str]] = mapped_column(JSON, nullable=True)
     description = Column(String)
     content = Column(String)
+    content_summary = Column(String)
     url = Column(String)
     images: Mapped[List[str]] = mapped_column(JSON, nullable=True)
     source_name = Column(String)
     source_url = Column(String)
     meta_data = Column(String)
-    country: Mapped[List[str]] = mapped_column(JSON, nullable=True)
+    locations: Mapped[List[str]] = mapped_column(JSON, nullable=True)
     keywords: Mapped[List[str]] = mapped_column(JSON, nullable=True)  # Store keywords as JSON
 
 
