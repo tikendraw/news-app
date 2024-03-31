@@ -71,7 +71,7 @@ def get_random_headers():
 
 def extract_text(element: Optional[BeautifulSoup]) -> Optional[str]:
     """Extract text content from a BeautifulSoup element."""
-    return element.get_text(strip=True) if element else None
+    return element.get_text().strip() if element else None
 
 def extract_attr(element: Optional[BeautifulSoup], attr: str) -> Optional[str]:
     """Extract an attribute value from a BeautifulSoup element."""

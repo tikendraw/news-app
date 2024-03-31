@@ -6,7 +6,11 @@ cnn_scapper = CNNScraper()
 articles = cnn_scapper.run()
 
 for num,article in enumerate(articles):
-    print(num, ': ', article.title)
+    print(num, ' : ', article.title)
+    print("author:  ", article.author)
+    print("pub   : ", article.published_at)
+    print("url   : ", article.url)
+    print("\n")
     
 cnn_scapper.write_db(session=next(get_db()), orm_class=NewsArticleORM)
 print("Done!!!")
