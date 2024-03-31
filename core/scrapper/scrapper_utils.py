@@ -1,16 +1,10 @@
-import asyncio
-import random
 from functools import partial
-from pathlib import Path
-from pprint import pprint
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Callable, Dict, Optional
 from urllib.parse import urljoin
-
-import aiohttp
+from .cache import load_cache, save_cache, is_url_cached, cache_url
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-from pydantic import BaseModel
 
 HEADERS = [
     {
@@ -46,6 +40,28 @@ def scrape_links(soup:BeautifulSoup, url:str)->Dict:
             other_pages.append(absolute_url)
     return {"articles": list(articles), "other_pages": list(other_pages)}
 
+def scrape_links_cached(soup: BeautifulSoup, url: str) -> Dict:
+    articles = []
+    other_pages = []
+    cache = load_cache()  # Load the cache
+
+    for link in soup.find_all('a'):
+        relative_url = link.get('href')
+        if relative_url:
+            absolute_url = urljoin(url, relative_url)
+
+        if absolute_url.endswith('.html'):
+            if not is_url_cached(absolute_url, cache):  # Check if the URL is not cached
+                articles.append(absolute_url)
+                cache_url(absolute_url, cache)  # Add the URL to the cache
+        else:
+            if not is_url_cached(absolute_url, cache):  # Check if the URL is not cached
+                other_pages.append(absolute_url)
+                cache_url(absolute_url, cache)  # Add the URL to the cache
+
+    save_cache(cache)  # Save the updated cache
+
+    return {"articles": articles, "other_pages": other_pages}
 
 def get_response(url:str, headers=None, **kwargs)->requests.Response:
     response = requests.get(url, headers=headers, **kwargs)

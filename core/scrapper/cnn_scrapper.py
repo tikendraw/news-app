@@ -1,19 +1,17 @@
 import asyncio
 import random
-from typing import Any, Callable, Dict, List, Optional, Type
-from urllib.parse import urljoin
+from typing import Any, Dict, List, Optional, Type
+from urllib.parse import urlparse
 
 import aiohttp
 from bs4 import BeautifulSoup
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db.crud.news_crud import add_article
+from ..logging import logger
 from ..schema.article import Article
 from .base_scrapper import BaseScraper
-from .scrapper_utils import (extract_attr, extract_content, extract_image,
-                            extract_text, get_random_headers, get_soup,
-                            scrape_links)
+from .scrapper_utils import extract_content, extract_image, extract_text
 
 
 class CNNArticle(Article):
@@ -85,8 +83,8 @@ class CNNScraper(BaseScraper):
         }
 
     def __init__(self):
+        super().__init__()
         self.base_url = "https://edition.cnn.com/"
-        self.headers = [get_random_headers() for _ in range(10)]
         self.articles_data:list[CNNArticle]=None
 
     def get_images(self, soup: BeautifulSoup, selector: str) -> List[Dict[str, Optional[str]]]:
@@ -149,31 +147,39 @@ class CNNScraper(BaseScraper):
             url=kwargs.get("url"),
             )
 
-
-    def run(self, category: str='base'):
-        
+    def get_url(self, category:str) -> str:
         if category not in self.category_url:
             raise ValueError(f"Invalid category: {category}. Must be one of {self.category_url.keys()}")
-        from icecream import ic
-        url = self.category_url[category]
+        return self.category_url[category]
+    
+    def get_scrapable_urls(self, links: Dict[str, List[str]]) -> List[str]:
+        scrapable_links = []
+        base_domain = urlparse(self.base_url).netloc
+        links = links['articles']
         
-        ic(url)
+        for link in links:
+            link_domain = urlparse(link).netloc
+            if link_domain == base_domain:
+                scrapable_links.append(link)
+            else:
+                logger.warning(f"Skipping {link} (outside {base_domain} domain)")
+    
+        return scrapable_links    
+    
+    def _run(self, category:str='base')-> list[CNNArticle]:
+
+        url = self.get_url(category=category)
         response = self.get_response(url, headers=random.choice(self.headers))
-        ic(response.status_code)
         soup = self.get_soup(response.text)
-        ic('got soup')
         links = self.scrape_links(soup=soup, url=self.base_url)
         
-        article_links = links["articles"]
-        ic("links: ", len(article_links))
-        self.articles_data = asyncio.run(self.fast_scrape_articles(article_links))
-        return self.articles_data
-    
-    # def write_json(self, filename):
-    #     with open(filename, 'w') as f:
-    #         json.dump(self.articles_data, f, indent=4)  
-    #     print(f"Wrote {len(self.articles_data)} articles to {filename}")
-                
+        if not links:
+            print("No links found")
+            return []
+        
+        article_links = self.get_scrapable_urls(links)
+        return asyncio.run(self.fast_scrape_articles(article_links))
+                    
 
     def write_db(self, session:Session, orm_class:Type):
         for article in self.articles_data:
@@ -196,3 +202,5 @@ class CNNScraper(BaseScraper):
         async with aiohttp.ClientSession() as session:
             tasks = [self.async_scrape_pipeline(url, session) for url in urls]
             return await asyncio.gather(*tasks)
+
+

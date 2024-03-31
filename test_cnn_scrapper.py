@@ -3,7 +3,7 @@ from core.db.news_tables import NewsArticleORM
 from core.scrapper.cnn_scrapper import CNNScraper
 
 cnn_scapper = CNNScraper()
-articles = cnn_scapper.run()
+articles = cnn_scapper.run(category='world')
 
 for num,article in enumerate(articles):
     print(num, ' : ', article.title)
