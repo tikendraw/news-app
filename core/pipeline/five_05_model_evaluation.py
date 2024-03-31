@@ -1,8 +1,5 @@
-from src.core.config.configuration import ConfigurationManager
-from src.core.components.model_evaluation import ModelEvaluation
-from src.core.logging import logger
-
-
+from core.config.configuration import ConfigurationManager
+from core.components.model_evaluation import ModelEvaluation
 
 
 class ModelEvaluationTrainingPipeline:

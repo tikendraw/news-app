@@ -1,6 +1,5 @@
-from src.core.config.configuration import ConfigurationManager
-from src.core.components.model_trainer import ModelTrainer
-from src.core.logging import logger
+from core.config.configuration import ConfigurationManager
+from core.components.model_trainer import ModelTrainer
 
 
 class ModelTrainerTrainingPipeline:

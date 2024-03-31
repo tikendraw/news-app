@@ -1,16 +1,19 @@
-from src.core.config.configuration import ConfigurationManager
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from transformers import pipeline
 
 
 class PredictionPipeline:
-    def __init__(self, model_path='bart-samsum-model', tokenizer_path='tokenizer'):
+    def __init__(self, model_path="bart-samsum-model", tokenizer_path="tokenizer"):
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_path)  # Load trained model
-        self.pipe = pipeline("summarization", model=self.model, tokenizer=self.tokenizer)
-        #self.config = ConfigurationManager().get_model_evaluation_config()
-        #tokenizer = AutoTokenizer.from_pretrained(self.config.tokenizer_path)
-        #pipe = pipeline("summarization", model=self.config.model_path,tokenizer=tokenizer)
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(
+            model_path
+        )  # Load trained model
+        self.pipe = pipeline(
+            "summarization", model=self.model, tokenizer=self.tokenizer
+        )
+        # self.config = ConfigurationManager().get_model_evaluation_config()
+        # tokenizer = AutoTokenizer.from_pretrained(self.config.tokenizer_path)
+        # pipe = pipeline("summarization", model=self.config.model_path,tokenizer=tokenizer)
 
     def predict(self, text):
         gen_kwargs = {"length_penalty": 0.8, "num_beams": 8, "max_length": 200}
@@ -23,7 +26,6 @@ class PredictionPipeline:
         print(output)
 
         return output
-    
 
 
 # Example usage (replace with your actual file paths)
@@ -31,7 +33,7 @@ if __name__ == "__main__":
     model_path = "bart-samsum-model"  # Update with your model path
     tokenizer_path = "tokenizer"  # Update with your tokenizer path
     model = PredictionPipeline(model_path, tokenizer_path)
-    sample_text="""The economy of India has transitioned from a mixed planned economy to a mixed middle-income developing social market economy with notable public sector in strategic sectors.[47] It is the world's fifth-largest economy by nominal GDP and the third-largest by purchasing power parity (PPP); on a per capita income basis, India ranked 139th by GDP (nominal) and 127th by GDP (PPP).[48] From independence in 1947 until 1991, successive governments followed Soviet model and promoted protectionist economic policies, with extensive Sovietization, state intervention, demand-side economics, natural resources, bureaucrat driven enterprises and economic regulation. This is characterised as dirigism, in the form of the Licence Raj.[49][50] The end of the Cold War and an acute balance of payments crisis in 1991 led to the adoption of a broad economic liberalisation in India and indicative planning.[51][52] Since the start of the 21st century, annual average GDP growth has been 6% to 7%.[47] The economy of the Indian subcontinent was the largest in the world for most of recorded history up until the onset of colonialism in early 19th century.[53][54][55]
+    sample_text = """The economy of India has transitioned from a mixed planned economy to a mixed middle-income developing social market economy with notable public sector in strategic sectors.[47] It is the world's fifth-largest economy by nominal GDP and the third-largest by purchasing power parity (PPP); on a per capita income basis, India ranked 139th by GDP (nominal) and 127th by GDP (PPP).[48] From independence in 1947 until 1991, successive governments followed Soviet model and promoted protectionist economic policies, with extensive Sovietization, state intervention, demand-side economics, natural resources, bureaucrat driven enterprises and economic regulation. This is characterised as dirigism, in the form of the Licence Raj.[49][50] The end of the Cold War and an acute balance of payments crisis in 1991 led to the adoption of a broad economic liberalisation in India and indicative planning.[51][52] Since the start of the 21st century, annual average GDP growth has been 6% to 7%.[47] The economy of the Indian subcontinent was the largest in the world for most of recorded history up until the onset of colonialism in early 19th century.[53][54][55]
 
 Nearly 70% of India's GDP is driven by domestic consumption;[56] country remains the world's sixth-largest consumer market.[57] Apart from private consumption, India's GDP is also fueled by government spending, investments, and exports.[58] In 2022, India was the world's 8th-largest importer and the 10th-largest exporter.[59] India has been a member of the World Trade Organization since 1 January 1995.[60] It ranks 63rd on the Ease of doing business index and 40th on the Global Competitiveness Index.[61] With 476 million workers, the Indian labour force is the world's second-largest.[20] India has one of the world's highest number of billionaires and extreme income inequality.[62][63]
 
