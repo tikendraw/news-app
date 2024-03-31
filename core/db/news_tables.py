@@ -24,7 +24,6 @@ class NewsArticleORM(Base):
     url = Column(String)
     images: Mapped[List[str]] = mapped_column(JSON, nullable=True)
     source_name = Column(String)
-    source_url = Column(String)
     meta_data = Column(String)
     locations: Mapped[List[str]] = mapped_column(JSON, nullable=True)
     keywords: Mapped[List[str]] = mapped_column(JSON, nullable=True)  # Store keywords as JSON

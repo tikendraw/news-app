@@ -4,7 +4,7 @@ from typing import Iterable, List, Type
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from ...schema.article import NewsArticle
+from ...schema.article import Article
 from .. import SessionLocal
 from ..db_exceptions import (AddArticleError, DatabaseError,
                              DeleteArticleError, UpdateArticleError)
@@ -12,7 +12,7 @@ from ..news_tables import Base
 
 
 # Funtions to do operation with db
-def add_article(article: NewsArticle, db: Session, orm_class: Type):
+def add_article(article: Article, db: Session, orm_class: Type):
     """
     Adds an article to the database. Rolls back the transaction if the article already exists.
 
@@ -36,7 +36,7 @@ def add_article(article: NewsArticle, db: Session, orm_class: Type):
         content_summary=article.content_summary,
         images=article.images,
         source_name=article.source_name,
-        source_url=article.source_url,
+        locations=article.locations
     )
 
     db.add(article_orm)
@@ -49,7 +49,7 @@ def add_article(article: NewsArticle, db: Session, orm_class: Type):
         # raise AddArticleError(f"Error adding article: {e}")
         raise e
 
-def update_article(article_id:int, article: NewsArticle, db: Session, orm_class: Type):
+def update_article(article_id:int, article: Article, db: Session, orm_class: Type):
     article_orm = db.query(orm_class).filter_by(id=article_id).first()
 
     if article_orm is None:
@@ -62,10 +62,9 @@ def update_article(article_id:int, article: NewsArticle, db: Session, orm_class:
         article_orm.description = article.description
         article_orm.content = article.content
         article_orm.url = article.url
-        article_orm.image = article.image
+        article_orm.images = article.images
         article_orm.source_name = article.source_name
-        article_orm.source_url = article.source_url
-
+        article_orm.locations = article.locations
         db.commit()
 
 

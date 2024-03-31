@@ -20,7 +20,6 @@ class Article(BaseModel):
     images: Optional[List[Dict]] = None
     published_at: Optional[datetime] = Field(alias="publishedAt", default=None)
     source_name: Optional[str]=None
-    source_url: Optional[Union[HttpUrl, str]]=None
     keywords: Optional[List[str]] = None
     sentiment: Optional[float] = None
     meta_data: Optional[Dict[str, Union[str, List[str]]]] = {}
@@ -45,7 +44,6 @@ class ShowArticle(BaseModel):
     images: Optional[List[Dict]] = None
     published_at: Optional[datetime] = Field(alias="publishedAt", default=None)
     source_name: Optional[str] = None
-    source_url: Optional[Union[HttpUrl, str]] = None
     keywords: Optional[List[str]] = None
     sentiment: Optional[float] = None
     meta_data: Optional[Dict[str, Union[str, List[str]]]] = {}
