@@ -107,12 +107,10 @@ class BaseScraper(ABC):
         return self.articles_data
     
     def get_n_links(self, links:list[str], n:int)->list[str]:
-        if n==-1:
+        if n==-1 or n>=len(links):
             return links
-        elif n>0 and n<=len(links):
+        elif n>0 and n<len(links):
             return links[:n]
-        else:
-            raise ValueError(f"Invalid n value: {n}. Must be -1 or a positive integer")
 
 
     def filter_empty_articles(self, articles: list[Article]) -> list[Article]:
