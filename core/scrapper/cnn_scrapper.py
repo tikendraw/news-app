@@ -65,6 +65,32 @@ class CNNScraper(BaseScraper):
         "style":"https://edition.cnn.com/style/",
         "health":"https://edition.cnn.com/health/",
         "sports":"https://edition.cnn.com/sports/",
+        
+        "africa":"https://edition.cnn.com/world/africa/",
+        "asia":"https://edition.cnn.com/world/asia/",
+        "americas":"https://edition.cnn.com/world/americas/",
+        "australia":"https://edition.cnn.com/world/australia/",
+        "china":"https://edition.cnn.com/world/china/",
+        "india":"https://edition.cnn.com/world/india/",
+        "europe":"https://edition.cnn.com/world/europe/",
+        "middle-east":"https://edition.cnn.com/world/middle-east/",
+        "united-kingdom":"https://edition.cnn.com/world/united-kingdom/",
+        
+        "technology":"https://edition.cnn.com/business/tech",
+        
+        "olympics-2024":"https://edition.cnn.com/sport/paris-olympics-2024",
+        "football":"https://edition.cnn.com/sport/football",
+        
+        "fitness":"https://edition.cnn.com/health/life-but-better/fitness",
+        "food":"https://edition.cnn.com/health/life-but-better/food",
+        "sleep":"https://edition.cnn.com/health/life-but-better/sleep",
+        "mindfulness":"https://edition.cnn.com/health/life-but-better/mindfulness",
+        "relationship":"https://edition.cnn.com/health/life-but-better/relationships",
+        
+        "celebrity":"https://edition.cnn.com/entertainment/celebrities",
+        "movies":"https://edition.cnn.com/entertainment/movies",
+        "television":"https://edition.cnn.com/entertainment/tv-shows"
+        
     }
 
     selectors =  {
@@ -82,8 +108,8 @@ class CNNScraper(BaseScraper):
                     ]
         }
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.base_url = "https://edition.cnn.com/"
         self.articles_data:list[CNNArticle]=None
 
@@ -103,7 +129,7 @@ class CNNScraper(BaseScraper):
     
     
     def scrape_article(self, soup: BeautifulSoup) -> Dict:
-
+        
         title = extract_content(soup, self.selectors["title"])
         author = extract_content(soup, self.selectors["author"])
         published_at = extract_content(soup, self.selectors["published_at"])
@@ -130,9 +156,6 @@ class CNNScraper(BaseScraper):
             "images": images
         }
         
-        
-
-    
     def parse_scraped_article(self, article: Dict, *args, **kwargs) -> CNNArticle:
         """Parse a scraped article dictionary into a CNNArticle object."""
         return CNNArticle(
@@ -152,7 +175,7 @@ class CNNScraper(BaseScraper):
             raise ValueError(f"Invalid category: {category}. Must be one of {self.category_url.keys()}")
         return self.category_url[category]
     
-    def get_scrapable_urls(self, links: Dict[str, List[str]]) -> List[str]:
+    def filter_scrapable_urls(self, links: Dict[str, List[str]]) -> List[str]:
         scrapable_links = []
         base_domain = urlparse(self.base_url).netloc
         links = links['articles']
@@ -163,22 +186,26 @@ class CNNScraper(BaseScraper):
                 scrapable_links.append(link)
             else:
                 logger.warning(f"Skipping {link} (outside {base_domain} domain)")
-    
+
+        logger.debug(f"Found {len(scrapable_links)} Scrapable article links")
         return scrapable_links    
     
-    def _run(self, category:str='base')-> list[CNNArticle]:
-
+    
+    
+    def _run(self, category:str='base', n:int=-1, filter_empty_articles:bool=True)-> list[CNNArticle]:
         url = self.get_url(category=category)
         response = self.get_response(url, headers=random.choice(self.headers))
         soup = self.get_soup(response.text)
         links = self.scrape_links(soup=soup, url=self.base_url)
-        
         if not links:
-            print("No links found")
             return []
+
+        article_links = self.filter_scrapable_urls(links)
+        article_links = self.get_n_links(article_links, n)
+            
+        articles= asyncio.run(self.fast_scrape_articles(article_links))
         
-        article_links = self.get_scrapable_urls(links)
-        return asyncio.run(self.fast_scrape_articles(article_links))
+        return self.filter_empty_articles(articles) if filter_empty_articles else articles
                     
 
     def write_db(self, session:Session, orm_class:Type):
