@@ -10,6 +10,8 @@ bs4
 aiohttp
 fake-useragent
 py-pipelines
+langchain==0.1.14
+google-generativeai
 transformers
 transformers[sentencepiece]
 datasets
