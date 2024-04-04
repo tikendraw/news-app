@@ -103,6 +103,7 @@ class CNNScraper(BaseScraper):
             "content": "body > div.layout__content-wrapper.layout-with-rail__content-wrapper > section.layout__wrapper.layout-with-rail__wrapper > section.layout__main-wrapper.layout-with-rail__main-wrapper > section.layout__main.layout-with-rail__main > article > section > main > div.article__content-container > div.article__content",
             "images": [
                 "body > div.layout__content-wrapper.layout-with-rail__content-wrapper > section.layout__wrapper.layout-with-rail__wrapper > section.layout__main-wrapper.layout-with-rail__main-wrapper > section.layout__main.layout-with-rail__main > article > section > main > div.image__lede.article__lede-wrapper",
+                "body > div.layout__content-wrapper.layout-with-rail__content-wrapper > div.image__lede",
                 "body > div.layout__content-wrapper.layout-with-rail__conteraw_htmlnt-wrapper > section.layout__wrapper.layout-with-rail__wrapper > section.layout__main-wrapper.layout-with-rail__main-wrapper > section.layout__main.layout-with-rail__main > article > section > main > div.image__lede.article__lede-wrapper > div > div > div.gallery-inline__container > div",
                 "body > div.layout__content-wrapper.layout-with-rail__content-wrapper > section.layout__wrapper.layout-with-rail__wrapper > section.layout__main-wrapper.layout-with-rail__main-wrapper > section.layout__main.layout-with-rail__main > article > section > main > div.article__content-container > div.article__content > div.image",
                     ]
@@ -124,8 +125,8 @@ class CNNScraper(BaseScraper):
                 credit = extract_content(image, "figcaption", extract_fn=extract_text)
                 images.append({"image_url": image_url, "caption": caption, "credit": credit})
             except (AttributeError, TypeError) as e:
-                print(f"Error extracting image: {e}")
-        return images    
+                logger.error("Error extracting image: {e}", exc_info=True)
+        return images
     
     
     def scrape_article(self, soup: BeautifulSoup) -> Dict:
@@ -185,7 +186,7 @@ class CNNScraper(BaseScraper):
             if link_domain == base_domain:
                 scrapable_links.append(link)
             else:
-                logger.warning(f"Skipping {link} (outside {base_domain} domain)")
+                logger.warning(f"(Outside {base_domain} domain) :: Skipping {link}")
 
         logger.debug(f"Found {len(scrapable_links)} Scrapable article links")
         return scrapable_links    

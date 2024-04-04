@@ -1,15 +1,14 @@
 import os
 from typing import List
 
+from dotenv import load_dotenv
 from langchain.chains.llm import LLMChain
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import BaseModel, Field, validator
 
 #Import Modules
-from langchain_google_genai import  GoogleGenerativeAI
-from dotenv import load_dotenv
-
+from langchain_google_genai import GoogleGenerativeAI
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
@@ -21,18 +20,6 @@ class ArticleSummary(BaseModel):
     tags: List[str] = Field(description="tags related to the article")
     category: list[str] = Field(description="Category of an article")
     locations: list[str] | None = Field(description="Location this article is about")
-
-
-    @validator("content_summary")
-    def summary_length(cls, field):
-        sum_len = len(field.split(' '))
-        if 80< sum_len <120:
-            
-            if sum_len<80:
-                raise ValueError("Very too short summary")
-            if sum>120:
-                raise ValueError("Very too long summary")
-        return field
     
 
 
@@ -56,7 +43,7 @@ Here is the Article:
 
 def get_llm():
     import os
-    api_key = os.environ.get(['GEMINI_API_KEY'])
+    api_key = os.environ.get('GEMINI_API_KEY')
     
     if not api_key:
         raise ValueError("No gemini api key found . set ENVIRONMENT variable 'GEMINI_API_KEY'")
