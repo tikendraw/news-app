@@ -1,16 +1,11 @@
-pydantic
-sqlalchemy2-stubs==0.0.2a38
 flask
 requests-cache
 pre-commit
 python-dotenv
 newsdataapi
-icecream
 bs4
-aiohttp
-fake-useragent
 py-pipelines
-langchain==0.1.14
+langchain
 google-generativeai
 transformers
 transformers[sentencepiece]
@@ -23,14 +18,8 @@ nltk
 tqdm
 PyYAML
 matplotlib
-torch
 notebook
 ipykernel
 boto3
 mypy-boto3-s3
-python-box==6.0.2
-ensure==1.0.2
-fastapi==0.78.0
-uvicorn==0.18.3
-Jinja2==3.1.2
--e .
+

@@ -1,90 +1,118 @@
-from typing import Iterable, List, Type
+from typing import Any, Iterable, List, Type
 
 # Function to parse JSON articles and insert into database if valid
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from ...schema.article import Article
 from .. import SessionLocal
-from ..db_exceptions import (AddArticleError, DatabaseError,
-                             DeleteArticleError, UpdateArticleError)
-from ..news_tables import Base
+from ..db_exceptions import AddError, DatabaseError, DeleteError, UpdateError
+from ..news_tables import Base, NewsArticleORM, NewsArticleSummaryORM
 
+A = Type[Base]
 
-# Funtions to do operation with db
-def add_article(article: Article, db: Session, orm_class: Type):
-    """
-    Adds an article to the database. Rolls back the transaction if the article already exists.
+class BaseRepository:
+    def __init__(self, model: Type):
+        self.model = model
 
+    def map_to_orm(self, obj: Any) -> A:
+        """
+        Map the attributes of the input object to the ORM model.
+        
+        Parameters:
+        obj (Any): The input object to be mapped.
+        
+        Returns:
+        any: The mapped ORM model instance.
+        """
+        if isinstance(obj, self.model):
+            return obj
+        
+        mapped_obj = self.model()
+        for key, value in obj.__dict__.items():
+            if hasattr(mapped_obj, key):
+                setattr(mapped_obj, key, value)
+        return mapped_obj
 
-    Parameters
-    ----------
-    article: The article to add.
-    db: The database session.
-    orm_class: The ORM class to use for the article.
+    def add(self, obj: A, db: Session) -> A:
+        """
+        Add the object to the database and return the added ORM instance.
+        
+        Parameters:
+        obj (A): The object to be added of the ArticleORM class.
+        db (Session): The database session.
+        
+        Returns:
+        obj (A): The added ORM instance.
+        """
+        orm_obj = self.map_to_orm(obj)
+        db.add(orm_obj)
+        try:
+            db.commit()
+            return orm_obj
+        except IntegrityError:
+            db.rollback()
+            raise AddError(f"Error adding object: {obj}")
+        except SQLAlchemyError as e:
+            db.rollback()
+            raise DatabaseError(f"Error adding object: {e}")
+        
+    def update(self, obj_id: int, updates: dict, db: Session) -> A:
+        """
+        Update the object with the given ID and return the updated ORM instance.
+        
+        Parameters:
+        obj_id (int): The ID of the object to be updated.
+        updates (dict): A dictionary of updates to be applied to the object.
+        db (Session): The database session.
+        
+        Returns:
+        A: The updated ORM instance.
+        """
+        obj = db.query(self.model).filter_by(id=obj_id).first()
+        if obj is None:
+            raise UpdateError(f"Object with ID {obj_id} does not exist.")
+        for key, value in updates.items():
+            setattr(obj, key, value)
+        try:
+            db.commit()
+            return obj
+        except SQLAlchemyError as e:
+            db.rollback()
+            raise UpdateError(f"Error updating object with ID {obj_id}: {e}")
+        
+        
+    def get_all(self, db: Session) -> Iterable[A]:
+        return db.query(self.model).all()
 
+    def get_n(self, db: Session, n: int) -> Iterable[A]:
+        if n > 0:
+            return db.query(self.model).limit(n).all()
+        elif n == -1:
+            return db.query(self.model).all()
+        else:
+            return None
 
-    """
-    article_orm = orm_class(
-        published_at=article.published_at,
-        title=article.title,
-        author=article.author,
-        category=article.category,
-        description=article.description,
-        content=article.content,
-        url=article.url,
-        content_summary=article.content_summary,
-        images=article.images,
-        source_name=article.source_name,
-        locations=article.locations
-    )
-
-    db.add(article_orm)
-
-    try:
-        db.commit()
-    # except IntegrityError:
-        # db.rollback()
-    except Exception as e:
-        # raise AddArticleError(f"Error adding article: {e}")
-        raise e
-
-def update_article(article_id:int, article: Article, db: Session, orm_class: Type):
-    article_orm = db.query(orm_class).filter_by(id=article_id).first()
-
-    if article_orm is None:
-        raise UpdateArticleError(f"Article with URL {article.url} does not exist.")
-    else:
-        article_orm.published_at = article.published_at
-        article_orm.title = article.title
-        article_orm.author = article.author
-        article_orm.category = article.category
-        article_orm.description = article.description
-        article_orm.content = article.content
-        article_orm.url = article.url
-        article_orm.images = article.images
-        article_orm.source_name = article.source_name
-        article_orm.locations = article.locations
-        db.commit()
-
-
-def get_articles(db: Session, orm_class: Type):
-    return db.query(orm_class).all()
-
-
-def get_n_articles(db: Session, orm_class: Type, n: int):
+    def get_by_id(self, obj_id: int, db: Session) -> A:
+        return db.query(self.model).filter_by(id=obj_id).first()
     
-    if n > 0:
-        return db.query(orm_class).limit(n).all()
-    elif n == -1:
-        return db.query(orm_class).all()
-    else:
-        return None
+    def delete(self, obj_id: int, db: Session) -> None:
+        obj = db.query(self.model).filter_by(id=obj_id).first()
+        if obj is None:
+            raise DeleteError(f"Object with ID {obj_id} does not exist.")
+        try:
+            db.delete(obj)
+            db.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            raise DeleteError(f"Error deleting object with ID {obj_id}: {e}")
+        
+# Repositories for each table
+class NewsArticleRepository(BaseRepository):
+    def __init__(self):
+        super().__init__(NewsArticleORM)
 
-def delete_article(article_id:int, db: Session, orm_class: Type):
-    try: 
-        article_orm = db.query(orm_class).filter_by(id=article_id).first()
-        db.delete(article_orm)
-        db.commit()
-    except Exception as e:
-        raise DeleteArticleError(f"Error deleting article: {e}")
+
+class NewsArticleSummaryRepository(BaseRepository):
+    def __init__(self):
+        super().__init__(NewsArticleSummaryORM)

@@ -7,7 +7,6 @@ import aiohttp
 from bs4 import BeautifulSoup
 from sqlalchemy.orm import Session
 
-from ..db.crud.news_crud import add_article
 from ..logging import logger
 from ..schema.article import Article
 from .base_scrapper import BaseScraper
@@ -24,6 +23,7 @@ class CNNArticle(Article):
     locations: Optional[list[str]] = None
     content: Optional[str] = None
     images: List[Dict[str, Any]] = []
+    source_name:Optional[str] = "CNN"
     url:Optional[str] = None
     meta_data: Optional[Dict[str, Any]] = {}
 
@@ -44,8 +44,9 @@ class CNNArticle(Article):
         Description: {self.description}
         Location: {self.locations}
         Content: {self.content}
-        Source URL: {self.source_url}
+        Source URL: {self.url}
         Images: {self.images}
+        Source Name: {self.source_name}
         Metadata: {self.meta_data}
         """
     
@@ -210,10 +211,7 @@ class CNNScraper(BaseScraper):
                     
 
     def write_db(self, session:Session, orm_class:Type):
-        for article in self.articles_data:
-            add_article(article, session, orm_class=orm_class)
-        print(f"Wrote {len(self.articles_data)} articles to database")
-        
+        pass        
         
     async def async_get_html(self, url:str, session:aiohttp.ClientSession) -> str:
         headers = random.choice(self.headers)

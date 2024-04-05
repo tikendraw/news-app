@@ -15,22 +15,22 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 # Here's another example, but with a compound typed field.
 class ArticleSummary(BaseModel):
-    title: str = Field(description="Catching title for an article")
+    ai_title: str = Field(description="Catching title for an article")
     content_summary: str = Field(description="Summary of an article in 100 words only")
-    tags: List[str] = Field(description="tags related to the article")
-    category: list[str] = Field(description="Category of an article")
+    tags: List[str] | None = Field(description="tags related to the article")
+    category: list[str] | None = Field(description="Category of an article")
     locations: list[str] | None = Field(description="Location this article is about")
     
 
 
 article_prompt_template = """Generate the short Summary of this article in 100 words. 
-Keep important information, important points, incident, names and dates in the summary, less filling words, compact and informative. it should return a catching title for the summary.
+Keep important information, important points, incident, names and dates in the summary, less filling words, compact and informative. it should return a catching ai_title for the summary.
 content_summary which is summary of the article in 100 words, tags releated to the article, category of the article, and 
 location of the article(what location this article is about)
 
 The output should be formatted as a JSON instance that conforms to the JSON schema below.
 
-    "title": " a catchy title of the article",
+    "ai_title": " a catchy title of the article",
     "content_summary": " a short summary of the article in 100 words",
     "tags": ["tag1", "tag2"], # list of upto 5 strings tags 
     "category": [category1", "category2], # list of upto 5 categories that the article belongs to , e.g. politics, sports, etc.

@@ -1,34 +1,40 @@
+from icecream import ic
+
+from core.db.crud.news_crud import NewsArticleRepository, NewsArticleSummaryRepository
 from core.db.db_utils import get_db
-from core.db.news_tables import NewsArticleORM
+from core.db.news_tables import NewsArticleORM, NewsArticleSummaryORM
+from core.langchain_summarizer.summary_chain import ArticleSummary, get_summary
 from core.scrapper.cnn_scrapper import CNNScraper
-from core.db.crud.news_crud import add_article
-from core.langchain_summarizer.summary_chain import get_summary, ArticleSummary
 
 cnn_scapper = CNNScraper(enable_cache=True)
-articles = cnn_scapper.run(n=3)
+articles = cnn_scapper.run(category='americas',n=5)
+
+news_repo = NewsArticleRepository()
+summary_repo = NewsArticleSummaryRepository()
 
 
+for num, article in enumerate(articles, 1):
+    article_summary = get_summary(article=article.content)  # Get the ArticleSummary object
+    try:
+        with next(get_db()) as session:
+            article_orm = news_repo.add(article, session)
+            summary_orm = NewsArticleSummaryORM(
+                news_article_id=article_orm.id,
+                summary_column=article_summary.content_summary,
+                tags=article_summary.tags,
+                locations=article_summary.locations,
+                ai_title=article_summary.ai_title
+            )
+            summary_repo.add(summary_orm, session)
+            summary_column = session.query(NewsArticleSummaryORM).filter_by(news_article_id=article_orm.id).first().summary_column
 
-for num,article in enumerate(articles,1):
-    
-    
-    article_summary = get_summary(article=article.content)
-    
-    if isinstance(article_summary, ArticleSummary):        
-        article.content_summary = article_summary.content_summary
-        article.locations = article_summary.locations
-        article.keywords = article_summary.tags
-        article.category = article_summary.category
-        article.meta_data['ai_title'] = article_summary.title
+            ic(article.title)
+            ic(article_orm.id)
+        ic(summary_column)
+        ic("--"*22)
+    except AttributeError as e:
+        pass
+    except Exception as e:
+        ic(e)
         
-    add_article(article=article, db=next(get_db()), orm_class=NewsArticleORM )
-    
-    print()
-    print(f"{num}  :  {article.title}")
-    print("ai_title: ", article.meta_data.get("ai_title", None))
-    print("content length", len(article.content.split()))
-    print("summary length", len(article.content_summary.split()))
-    print("Compressed to: ", (len(article.content_summary.split())/len(article.content.split())) * 100 , "%")
-    
-# cnn_scapper.write_db(session=next(get_db()), orm_class=NewsArticleORM)
 print("Done!!!")
