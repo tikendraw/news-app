@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import Field, HttpUrl
 
@@ -22,7 +22,7 @@ class Article(BaseModel):
     source_name: Optional[str]=None
     keywords: Optional[List[str]] = None
     sentiment: Optional[float] = None
-    meta_data: Optional[Dict[str, Union[str, List[str]]]] = {}
+    meta_data: Optional[Dict[str, Any]] = {}
 
 class NewsArticle(Article):
     pass

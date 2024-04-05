@@ -28,4 +28,3 @@ class NewsArticleORM(Base):
     locations: Mapped[List[str]] = mapped_column(JSON, nullable=True)
     keywords: Mapped[List[str]] = mapped_column(JSON, nullable=True)  # Store keywords as JSON
 
-

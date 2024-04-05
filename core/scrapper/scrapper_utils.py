@@ -1,10 +1,12 @@
 from functools import partial
 from typing import Callable, Dict, Optional
 from urllib.parse import urljoin
-from .cache import load_cache, save_cache, is_url_cached, cache_url
+
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+
+from .scrapper_cache import cache_url, is_url_cached, load_cache, save_cache
 
 HEADERS = [
     {
