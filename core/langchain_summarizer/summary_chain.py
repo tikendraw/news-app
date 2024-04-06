@@ -1,10 +1,14 @@
 import os
-from core.schema.article_summary import ArticleSummary
+import time
+
 from dotenv import load_dotenv
 from langchain.chains.llm import LLMChain
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAI
+
+from core.schema.article_summary import ArticleSummary
+
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
@@ -54,6 +58,7 @@ def get_summary(article:str, n:int=3) -> ArticleSummary:
     if try_n<n:
         try:        
             response=llm_chain.invoke(input={"article":article})
+            time.sleep(1) # Gemini has 1 request per second limit
             summary = parser.parse(response['text'])
             
             if summary.__class__==ArticleSummary:
