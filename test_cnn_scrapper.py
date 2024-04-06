@@ -8,7 +8,7 @@ from core.langchain_summarizer.summary_chain import get_summary
 from core.scrapper.cnn_scrapper import CNNScraper
 
 cnn_scapper = CNNScraper(enable_cache=True)
-articles = cnn_scapper.run(category='americas',n=3)
+articles = cnn_scapper.run(category='base',n=3)
 
 news_repo = NewsArticleRepository()
 summary_repo = NewsArticleSummaryRepository()
@@ -23,6 +23,7 @@ for num, article in enumerate(articles, 1):
                 news_article_id=article_orm.id,
                 summary=article_summary.summary,
                 tags=article_summary.tags,
+                category=article_summary.category,
                 locations=article_summary.locations,
                 ai_title=article_summary.ai_title
             )
@@ -31,8 +32,11 @@ for num, article in enumerate(articles, 1):
 
             ic(article.title)
             ic(article_orm.id)
-        ic(summary_column)
+        # ic(summary_column)
+        ic(article_summary)
         ic("--"*22)
+        
+        print()
     except AttributeError as e:
         print("Attribute error:",e)
     except Exception as e:
