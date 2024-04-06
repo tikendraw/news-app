@@ -1,6 +1,5 @@
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from transformers import pipeline
-
+import transformers
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
 class PredictionPipeline:
     def __init__(self, model_path="bart-samsum-model", tokenizer_path="tokenizer"):
