@@ -1,11 +1,8 @@
-from typing import Any, Iterable, List, Type
+from typing import Any, Iterable, Type
 
 # Function to parse JSON articles and insert into database if valid
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
-
-from ...schema.article import Article
-from .. import SessionLocal
 from ..db_exceptions import AddError, DatabaseError, DeleteError, UpdateError
 from ..news_tables import Base, NewsArticleORM, NewsArticleSummaryORM
 
