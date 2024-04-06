@@ -5,6 +5,6 @@ setup(
     packages=find_packages(),
     version="0.1.0",
     description="summarizes news ",
-    author="tikendra",
+    author="tikendra and Soumyajit",
     license="MIT",
 )
