@@ -35,6 +35,7 @@ ipykernel = "^6.29.4"
 boto3 = "^1.34.78"
 mypy-boto3-s3 = "^1.34.65"
 langchain-google-genai = "^1.0.1"
+torch = "^2.2.2"
 
 [tool.poetry.group.dev.dependencies]
 fake-useragent = "^1.5.1"
