@@ -1,4 +1,3 @@
-import transformers
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
 class PredictionPipeline:
@@ -17,7 +16,7 @@ class PredictionPipeline:
         total_length = 0
 
         for sentence in sentences:
-            sentence_length = len(self.tokenizer.encode(" " + sentence))
+            sentence_length = len(self.tokenizer.encode(f" {sentence}"))
             if total_length + sentence_length > self.max_input_length:
                 chunks.append(". ".join(current_chunk) + ".")
                 current_chunk = [sentence]
