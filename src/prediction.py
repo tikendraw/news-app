@@ -1,8 +1,9 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
+
 class PredictionPipeline:
-    def __init__(self, model_path="bart-samsum-model", tokenizer_path="tokenizer"):
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    def __init__(self, model_path="tikendraw/news-app"):
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path)
         self.model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
         self.pipe = pipeline(
             "summarization", model=self.model, tokenizer=self.tokenizer
