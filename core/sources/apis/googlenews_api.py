@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional, Union
-
+import os
 import requests
 from icecream import ic
 from pydantic import BaseModel, Field, HttpUrl
