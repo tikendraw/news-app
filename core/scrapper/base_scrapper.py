@@ -2,12 +2,12 @@ import json
 from abc import ABC, abstractmethod
 from typing import Dict
 from urllib.parse import urljoin
-from ..schema.article import Article
 
 import requests
 from bs4 import BeautifulSoup
 
 from ..logging import logger
+from ..schema.article import Article
 from .scrapper_cache import load_cache, save_cache
 from .scrapper_utils import get_random_headers, get_response, get_soup
 
@@ -66,7 +66,7 @@ class BaseScraper(ABC):
             json.dump(self.articles_data, f, indent=4)  
         print(f"Wrote {len(self.articles_data)} articles to {filename}")
     
-    def scrape_links(self, soup: BeautifulSoup, url: str) -> Dict:
+    def scrape_links_from_soup(self, soup: BeautifulSoup, url: str) -> Dict:
         articles = set()
         other_pages = set()
 
@@ -87,24 +87,45 @@ class BaseScraper(ABC):
         logger.debug(f"Found {len(articles)} articles and {len(other_pages)} other pages")
         return {"articles": list(articles), "other_pages": list(other_pages)}
 
+
+    def __cache_and_return_articles(self,cache:bool = None, articles:list[Article]=None) -> list[Article]:
+        if cache is None:
+            cache = self.enable_cache
+
+        if cache:
+            for article in articles:
+                self.cache_url(article.url)
+
+            self.save_cache()
+
+        return articles
+
+    
     @abstractmethod
-    def _run(*args, **kwargs) -> list[Article]:
+    def _scrape_urls(self, *args, **kwargs) -> list[Article]:
+        raise NotImplementedError("_scrape_urls method not implemented")
+    
+    def scrape_urls(self, cache:bool=None, *args, **kwargs) -> list[str]:
+        try:
+            self.articles_data = self._scrape_urls(*args, **kwargs)
+        except Exception as e:
+            raise e
+        
+        return self.__cache_and_return_articles(cache=cache, articles=self.articles_data)
+
+    
+    @abstractmethod
+    def _run(self, *args, **kwargs) -> list[Article]:
         raise NotImplementedError("_run method not implemented")
     
-    def run(self, *args, **kwargs)->list:
+    def run(self, cache:bool=None, *args, **kwargs )->list:
         try:
             self.articles_data = self._run(*args, **kwargs)
         except Exception as e:
             raise e
         
-        
-        if self.enable_cache:
-            for article in self.articles_data:
-                self.cache_url(article.url)
-
-            self.save_cache()
-
-        return self.articles_data
+        return self.__cache_and_return_articles(cache=cache, articles=self.articles_data)
+    
     
     def get_n_links(self, links:list[str], n:int)->list[str]:
         if n==-1 or n>=len(links):

@@ -7,8 +7,10 @@ from core.db.news_tables import NewsArticleSummaryORM
 from core.langchain_summarizer.summary_chain import get_summary
 from core.scrapper.cnn_scrapper import CNNScraper
 
-cnn_scapper = CNNScraper(enable_cache=True)
-articles = cnn_scapper.run(category='base',n=3)
+url = "https://edition.cnn.com/2024/03/19/media/elon-musk-don-lemon-interview-analysis-hnk-intl/index.html?iid=cnn_buildContentRecirc_end_recirc"
+cnn_scrapper = CNNScraper(enable_cache=True)
+articles = cnn_scrapper.run(category='base',n=10)
+# articles = cnn_scrapper.scrape_urls(urls=[url])
 
 news_repo = NewsArticleRepository()
 summary_repo = NewsArticleSummaryRepository()

@@ -192,20 +192,24 @@ class CNNScraper(BaseScraper):
         logger.debug(f"Found {len(scrapable_links)} Scrapable article links")
         return scrapable_links    
     
-    
+    def _scrape_urls(self, urls: list[str], n = -1) -> list[CNNArticle]:
+        urls = self.get_n_links(urls, n)
+
+        articles= asyncio.run(self.fast_scrape_articles(urls))
+        return articles
+        
     
     def _run(self, category:str='base', n:int=-1, filter_empty_articles:bool=True)-> list[CNNArticle]:
         url = self.get_url(category=category)
         response = self.get_response(url, headers=random.choice(self.headers))
         soup = self.get_soup(response.text)
-        links = self.scrape_links(soup=soup, url=self.base_url)
+        links = self.scrape_links_from_soup(soup=soup, url=self.base_url)
         if not links:
             return []
 
-        article_links = self.filter_scrapable_urls(links)
-        article_links = self.get_n_links(article_links, n)
-            
-        articles= asyncio.run(self.fast_scrape_articles(article_links))
+        links = self.filter_scrapable_urls(links)
+
+        articles= self._scrape_urls(urls=links, n=n)
         
         return self.filter_empty_articles(articles) if filter_empty_articles else articles
                     
@@ -230,3 +234,4 @@ class CNNScraper(BaseScraper):
             return await asyncio.gather(*tasks)
 
 
+    
