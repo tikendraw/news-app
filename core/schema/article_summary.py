@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any, Union
 from pydantic import BaseModel, Field, validator
 
 class ArticleSummary(BaseModel):
@@ -10,6 +10,7 @@ class ArticleSummary(BaseModel):
 
     @validator('summary', pre=True)
     def extract_summary(cls, v, values):
+        # sourcery skip: assign-if-exp, reintroduce-else
         # Extract the summary from any key that contains the word "summary"
         summary_keys = [key for key in values if "summary" in key.lower()]
         if summary_keys:
@@ -24,3 +25,21 @@ class ArticleSummary(BaseModel):
     
     class Config:
         populate_by_name = True
+
+
+class ShowArticleSummary(BaseModel):
+    ai_title:str
+    summary:str
+    tags:list[str] | None = None
+    category:list[str] | None =None
+    locations:list[str] | None =None
+    news_article: Any | None = None
+    images:list[dict] | None =None
+    original_title:str | None =None
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+
+        self.images = self.news_article.images
+        self.original_title=self.news_article.title
+        del self.news_article
