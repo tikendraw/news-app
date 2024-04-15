@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Embedded News</title>
+</head>
+<body>
+
+    {% for i in news_articles %}
+    <iframe srcdoc="
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>News Article</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 20px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            p {
+                margin-bottom: 10px;
+            }
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>{{ i['original_title'] }}</h1>
+        <p><strong>Summary:</strong> {{ i['summary'] }}</p>
+        <p><strong>Tags:</strong> {% for tag in i['tags'] %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+        <p><strong>Locations:</strong> {% for location in i['locations'] %}{{ location }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+        {% for image in i['images'] %}
+            <img src='{{ image.image_url }}' alt='{{ image.caption }}'>
+            <p><strong>Caption:</strong> {{ image.caption }}</p>
+            <p><strong>Credit:</strong> {{ image.credit }}</p>
+        {% endfor %}
+    </body>
+    </html>
+" width="1100" height="1200" frameborder="0"></iframe>
+    {% endfor %}
+</body>
+</html>
