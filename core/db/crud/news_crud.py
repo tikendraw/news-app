@@ -5,7 +5,10 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 from ..db_exceptions import AddError, DatabaseError, DeleteError, UpdateError
 from ..news_tables import Base, NewsArticleORM, NewsArticleSummaryORM
+from pydantic import BaseModel
+from icecream import ic
 
+ic.disable()
 A = Type[Base]
 
 class BaseRepository:
@@ -79,19 +82,67 @@ class BaseRepository:
             raise UpdateError(f"Error updating object with ID {obj_id}: {e}")
         
         
-    def get_all(self, db: Session) -> Iterable[A]:
-        return db.query(self.model).all()
+    def get_all(self, db: Session, response_model: BaseModel=None) -> Iterable[A]:
+        articles=db.query(self.model).all()
+        
+        if response_model and articles:
+            articles = self._parse_to_response_model(articles, response_model=response_model)
+            
+        return articles
 
-    def get_n(self, db: Session, n: int) -> Iterable[A]:
+    def get_n(self, db: Session, n: int = 3, response_model: BaseModel=None) -> Iterable[A]:
         if n > 0:
-            return db.query(self.model).limit(n).all()
+            articles=db.query(self.model).limit(n).all()
         elif n == -1:
-            return db.query(self.model).all()
+            articles=db.query(self.model).all()
         else:
-            return None
+            raise ValueError("n must be a positive integer or -1")
+        
+        from icecream import ic
+        # ic(articles[0].__dict__)
+        print(fr"{dir(articles[0])}")
+        if response_model:
+            articles = self._parse_to_response_model(articles, response_model=response_model)
+            
+        return articles
 
-    def get_by_id(self, obj_id: int, db: Session) -> A:
-        return db.query(self.model).filter_by(id=obj_id).first()
+    def _parse_to_response_model(self, articles:list[A], response_model: BaseModel) -> Iterable[BaseModel]:
+
+        attributes_to_parse = self._get_parsable_attributes(article=articles[0])
+        
+        parsed_article = []
+        for article in articles:
+            article_info = {
+                attr:getattr(article, attr) for attr in attributes_to_parse
+            }
+            ic(article_info)
+            article_model = response_model(**article_info)
+            parsed_article.append(article_model)
+            
+        return parsed_article or None
+
+    def _get_parsable_attributes(self, article: A, not_to_parse_attributes=None):
+        if not not_to_parse_attributes:
+            not_to_parse_attributes = set([
+                '__annotations__', '__class__', '__class_getitem__', '__delattr__', '__dict__', '__dir__', '__doc__', 
+                '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', 
+                '__init_subclass__', '__le__', '__lt__', '__mapper__', '__module__', '__ne__', 
+                '__new__', '__orig_bases__', '__parameters__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', 
+                '__sizeof__', '__slots__', '__str__', '__subclasshook__', '__table__', '__tablename__', '__weakref__', 
+                '_sa_class_manager', '_sa_instance_state', '_sa_registry', 'metadata', 'registry'
+            ])
+        
+        return set(dir(article)).difference(not_to_parse_attributes)
+    
+    def get_by_id(self, obj_id: int, db: Session, response_model: BaseModel=None) -> A:
+        article= db.query(self.model).filter_by(id=obj_id).first()
+        
+        if response_model and article:
+            article = response_model(**article.__dict__)
+            
+        return article
+        
+        
     
     def delete(self, obj_id: int, db: Session) -> None:
         obj = db.query(self.model).filter_by(id=obj_id).first()
