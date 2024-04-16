@@ -36,10 +36,12 @@ class ShowArticleSummary(BaseModel):
     news_article: Any | None = None
     images:list[dict] | None =None
     original_title:str | None =None
+    source_url: str|None = None
     
     def __init__(self, **data):
         super().__init__(**data)
 
         self.images = self.news_article.images
         self.original_title=self.news_article.title
+        self.source_url=self.news_article.url
         del self.news_article

@@ -12,6 +12,7 @@ from ..schema.article import Article
 from .base_scrapper import BaseScraper
 from .scrapper_utils import extract_content, extract_image, extract_text
 
+from icecream import ic
 
 class CNNArticle(Article):
 
@@ -198,11 +199,16 @@ class CNNScraper(BaseScraper):
         articles= asyncio.run(self.fast_scrape_articles(urls))
         return articles
         
-    
+    from icecream import ic
     def _run(self, category:str='base', n:int=-1, filter_empty_articles:bool=True)-> list[CNNArticle]:
         url = self.get_url(category=category)
+        ic(f'url: {url}')
         response = self.get_response(url, headers=random.choice(self.headers))
+        ic(f'response: {response.status_code}')
+
         soup = self.get_soup(response.text)
+        ic(f'url: {url}')
+
         links = self.scrape_links_from_soup(soup=soup, url=self.base_url)
         if not links:
             return []

@@ -1,11 +1,11 @@
 from flask import Flask, render_template
-
-from core.db.crud.news_crud import NewsArticleSummaryRepository
-from core.db.db_utils import get_db
-from core.schema.article_summary import ShowArticleSummary
+from ..db.crud.news_crud import NewsArticleSummaryRepository
+from ..db.db_utils import get_db
+from ..schema.article_summary import ShowArticleSummary
 from icecream import ic
 
-ic.disable()
+# ic.disable()
+ic.enable()
 
 app = Flask(__name__)
 
@@ -26,8 +26,9 @@ def article_summary_to_json(article_summary: list[ShowArticleSummary]) -> list[d
 
 @app.route("/test")
 def test_index():  # sourcery skip: identity-comprehension
-    news_articles = news_repo.get_n(db=db_session, n=1, response_model=ShowArticleSummary)
-    news_articles = [a.model_dump() for a in news_articles]
+    # news_articles = news_repo.get_by_id(obj_id=1, db=db_session, response_model=ShowArticleSummary, return_dict=True)
+    news_articles = news_repo.get_n(db=db_session, n=3, response_model=ShowArticleSummary, return_dict=True)
+    print(len(news_articles))
 
     return render_template(
         "test.html",

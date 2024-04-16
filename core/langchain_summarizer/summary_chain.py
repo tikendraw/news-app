@@ -1,7 +1,7 @@
 import os
 import time
 from functools import lru_cache
-
+from core.utils.rate_limiter_easy import rate_limited
 from dotenv import load_dotenv
 from langchain.chains.llm import LLMChain
 from langchain.output_parsers import PydanticOutputParser
@@ -44,6 +44,7 @@ def get_llm():
     return GoogleGenerativeAI(model="gemini-pro", google_api_key=GEMINI_API_KEY)
 
 
+@rate_limited(1, mode='wait', delay_first_call=False)
 def get_summary(article: str, max_retries: int = 3) -> ArticleSummary:
     parser = PydanticOutputParser(pydantic_object=ArticleSummary)
     prompt = PromptTemplate(template=ARTICLE_PROMPT_TEMPLATE, input_variables=["article"])
@@ -52,7 +53,7 @@ def get_summary(article: str, max_retries: int = 3) -> ArticleSummary:
     for retry in range(max_retries):
         try:
             response = llm_chain.invoke(input={"article": article})
-            time.sleep(1)  # Gemini has a 1 request per second limit
+            # time.sleep(1)  # Gemini has a 1 request per second limit
             if "text" not in response:
                 logger.error("Unexpected response format from LLM: %s", response)
                 return None
