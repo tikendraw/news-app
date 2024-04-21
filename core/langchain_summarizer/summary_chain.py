@@ -7,7 +7,7 @@ from langchain.chains.llm import LLMChain
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAI
-
+from core.utils.common import text_preview
 from core.logging import logger
 from core.schema.article_summary import ArticleSummary
 
@@ -43,7 +43,7 @@ def get_llm():
     """
     return GoogleGenerativeAI(model="gemini-pro", google_api_key=GEMINI_API_KEY)
 
-
+import time
 @rate_limited(1, mode='wait', delay_first_call=False)
 def get_summary(article: str, max_retries: int = 3) -> ArticleSummary:
     parser = PydanticOutputParser(pydantic_object=ArticleSummary)
@@ -53,15 +53,16 @@ def get_summary(article: str, max_retries: int = 3) -> ArticleSummary:
     for retry in range(max_retries):
         try:
             response = llm_chain.invoke(input={"article": article})
-            # time.sleep(1)  # Gemini has a 1 request per second limit
+
             if "text" not in response:
                 logger.error("Unexpected response format from LLM: %s", response)
                 return None
-            return parser.parse(response["text"])
+            parsed_summary= parser.parse(response["text"])
+            return parsed_summary
+        
         except Exception as e:
             logger.error("Error generating summary for article:")
-            article_ = article.split()
-            logger.error(f"{article_[:200]}...[{len(article_) - 200} words]")
+            logger.error(text_preview(article,50))
             logger.exception(e)
             if retry == max_retries - 1:
                 logger.error("Maximum retries reached, returning None")

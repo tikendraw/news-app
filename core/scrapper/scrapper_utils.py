@@ -45,7 +45,6 @@ def scrape_links(soup:BeautifulSoup, url:str)->Dict:
 
 def get_response(url:str,  **kwargs_for_requests_get)->requests.Response:
     response = requests.get(url, **kwargs_for_requests_get)
-    print(f"Response code: {response.status_code}")
     # Raise an exception for non 200 status codes
     response.raise_for_status()
     return response
