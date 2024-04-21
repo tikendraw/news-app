@@ -7,8 +7,6 @@ bs4
 py-pipelines
 langchain
 google-generativeai
-transformers
-transformers[sentencepiece]
 datasets
 sacrebleu 
 rouge_score 
