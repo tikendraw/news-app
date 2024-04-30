@@ -27,7 +27,8 @@ def article_summary_to_json(article_summary: list[ShowArticleSummary]) -> list[d
 @app.route("/test")
 def test_index():  # sourcery skip: identity-comprehension
     # news_articles = news_repo.get_by_id(obj_id=1, db=db_session, response_model=ShowArticleSummary, return_dict=True)
-    news_articles = news_repo.get_n(db=db_session, n=3, response_model=ShowArticleSummary, return_dict=True)
+    # news_articles = news_repo.get_n(db=db_session, n=3, response_model=ShowArticleSummary, return_dict=True)
+    news_articles = news_repo.get_latest_n(n=10, db=db_session, response_model=ShowArticleSummary, return_dict=True)
     print(len(news_articles))
 
     return render_template(
