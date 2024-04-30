@@ -10,6 +10,7 @@ from langchain_google_genai import GoogleGenerativeAI
 from core.utils.common import text_preview
 from core.logging import logger
 from core.schema.article_summary import ArticleSummary
+import json
 
 # Load the API key from the environment
 load_dotenv()
@@ -43,7 +44,6 @@ def get_llm():
     """
     return GoogleGenerativeAI(model="gemini-pro", google_api_key=GEMINI_API_KEY)
 
-import time
 @rate_limited(1, mode='wait', delay_first_call=False)
 def get_summary(article: str, max_retries: int = 3) -> ArticleSummary:
     parser = PydanticOutputParser(pydantic_object=ArticleSummary)
@@ -57,16 +57,20 @@ def get_summary(article: str, max_retries: int = 3) -> ArticleSummary:
             if "text" not in response:
                 logger.error("Unexpected response format from LLM: %s", response)
                 return None
-            parsed_summary= parser.parse(response["text"])
-            return parsed_summary
+
+            return parser.parse(response["text"])
         
         except Exception as e:
+            logger.error("-"*44+"⮧")
             logger.error("Error generating summary for article:")
-            logger.error(text_preview(article,50))
+            logger.error(f"Article: {text_preview(article,30)}")
+            formatted_response = json.dumps(response['text'], indent=4)
+            logger.error(f"response: {formatted_response}")            
             logger.exception(e)
             if retry == max_retries - 1:
                 logger.error("Maximum retries reached, returning None")
                 return None
+            logger.error("-"*44+"⮥")
 
     # This should never be reached, but just in case
     return None
