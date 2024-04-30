@@ -5,6 +5,7 @@ from pydantic import BaseModel
 # Function to parse JSON articles and insert into database if valid
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 
 from ..db_exceptions import AddError, DatabaseError, DeleteError, UpdateError
 from ..news_tables import Base, NewsArticleORM, NewsArticleSummaryORM
@@ -103,7 +104,24 @@ class BaseRepository:
         article= [db.query(self.model).filter_by(id=obj_id).first()]
 
         return self._return_model_or_dict(article, response_model, return_dict)
+    
 
+    def get_latest_n(self, n: int, db: Session, response_model: BaseModel=None, return_dict: bool=True) -> Iterable[BaseModel|dict]:
+        """
+        Get the latest `n` articles from the database.
+
+        Args:
+            n (int): The number of latest articles to retrieve.
+            db (Session): The database session.
+            response_model (BaseModel, optional): The Pydantic model to use for serialization. Defaults to None.
+            return_dict (bool, optional): Whether to return the articles as dictionaries or Pydantic models. Defaults to True.
+
+        Returns:
+            Iterable[BaseModel|dict]: The latest `n` articles.
+        """
+        articles = db.query(self.model).order_by(desc(self.model.id)).limit(n).all()
+        return self._return_model_or_dict(articles, response_model, return_dict)
+    
     def _return_model_or_dict(self, arg0, response_model=None, return_dict=None):
         if not arg0:
             return None
